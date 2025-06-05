@@ -2,7 +2,7 @@ from typing import Any
 import cv2
 import numpy as np
 
-from crop_person.logging_utils import get_logger
+from prepare.logging_utils import get_logger
 
 log = get_logger()
 

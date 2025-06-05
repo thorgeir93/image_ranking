@@ -1,4 +1,4 @@
-from crop_person.cli import app
+from prepare.cli import app
 
 if __name__ == "__main__":
     app()

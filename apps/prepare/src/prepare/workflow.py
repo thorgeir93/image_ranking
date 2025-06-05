@@ -1,17 +1,17 @@
 from pathlib import Path
 import shutil
 from ultralytics import YOLO
-from crop_person.processes.crop import get_cropped_persons_from_directory
-from crop_person.processes.face import filter_images_with_faces
-from crop_person.processes.blur import filter_sharp_images_from_images
-from crop_person.utils import (
+from prepare.processes.crop import get_cropped_persons_from_directory
+from prepare.processes.face import filter_images_with_faces
+from prepare.processes.blur import filter_sharp_images_from_images
+from prepare.utils import (
     save_images,
     save_split_images,
     split_upper_lower,
     validate_input_dir,
     validate_output_dir,
 )
-from crop_person.logging_utils import get_logger
+from prepare.logging_utils import get_logger
 
 log = get_logger()
 

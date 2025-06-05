@@ -4,23 +4,23 @@ import shutil
 
 from ultralytics import YOLO
 
-from crop_person.logging_utils import get_logger
-from crop_person.processes.blur import filter_sharp_images_from_images
-from crop_person.utils import (
+from prepare.logging_utils import get_logger
+from prepare.processes.blur import filter_sharp_images_from_images
+from prepare.utils import (
     load_images_from_directory,
     save_images,
     validate_input_dir,
     validate_output_dir,
 )
-from crop_person.processes.face import filter_images_with_faces
-from crop_person.processes.crop import (
+from prepare.processes.face import filter_images_with_faces
+from prepare.processes.crop import (
     get_cropped_persons_from_directory,
 )
-from crop_person.utils import (
+from prepare.utils import (
     validate_input_dir,
     validate_output_dir,
 )
-from crop_person.workflow import run_workflow
+from prepare.workflow import run_workflow
 
 app = typer.Typer(
     help="Crop person(s) from images and filter sharp images.",

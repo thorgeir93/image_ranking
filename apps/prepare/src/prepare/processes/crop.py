@@ -4,9 +4,9 @@ import cv2
 from pathlib import Path
 from ultralytics import YOLO
 
-from crop_person.utils import is_image_file
-from crop_person.processes.blur import is_blurred, blur_score
-from crop_person.logging_utils import get_logger
+from prepare.utils import is_image_file
+from prepare.processes.blur import is_blurred, blur_score
+from prepare.logging_utils import get_logger
 
 log = get_logger()
 
