@@ -1,0 +1,42 @@
+version = 1
+requires-python = ">=3.13"
+
+[manifest]
+members = [
+    "common-utils",
+    "data-schemas",
+    "featurize",
+    "prepare",
+    "running-style-training",
+    "train",
+]
+
+[[package]]
+name = "common-utils"
+version = "0.1.0"
+source = { editable = "libs/common-utils" }
+
+[[package]]
+name = "data-schemas"
+version = "0.1.0"
+source = { editable = "libs/data-schemas" }
+
+[[package]]
+name = "featurize"
+version = "0.1.0"
+source = { editable = "apps/featurize" }
+
+[[package]]
+name = "prepare"
+version = "0.1.0"
+source = { editable = "apps/prepare" }
+
+[[package]]
+name = "running-style-training"
+version = "0.1.0"
+source = { virtual = "." }
+
+[[package]]
+name = "train"
+version = "0.1.0"
+source = { editable = "apps/train" }

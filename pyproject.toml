@@ -11,8 +11,3 @@ members = [
     "apps/*",
     "libs/*"
 ]
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
