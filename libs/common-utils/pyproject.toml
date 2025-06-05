@@ -1,0 +1,17 @@
+[project]
+name = "common-utils"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Þorgeir Eyfjörð Sigurðsson", email = "thorgeirsigurd@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = []
+
+[project.scripts]
+common-utils = "common_utils:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
