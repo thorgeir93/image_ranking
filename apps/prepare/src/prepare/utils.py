@@ -5,7 +5,7 @@ import typer
 import cv2
 
 
-from crop_person.logging_utils import get_logger
+from prepare.logging_utils import get_logger
 
 log = get_logger()
 
