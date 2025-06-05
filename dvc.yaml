@@ -1,0 +1,26 @@
+stages:
+  prepare:
+    cmd: uv run --package prepare -- python -m src.prepare.__main__ data/raw data/prepared
+    deps:
+      - apps/prepare/src/prepare
+      - data/raw
+    outs:
+      - data/prepared
+
+  featurize:
+    cmd: uv run --package featurize -- python -m src.featurize.__main__ data/prepared data/features
+    deps:
+      - apps/featurize/src/featurize
+      - data/prepared
+    outs:
+      - data/features
+
+  train:
+    cmd: uv run --package train -- python -m src.train.main data/features models/model.pkl metrics.json
+    deps:
+      - apps/train/src/train
+      - data/features
+    outs:
+      - models/model.pkl
+    metrics:
+      - metrics.json
