@@ -1,6 +1,6 @@
 stages:
   prepare:
-    cmd: uv run --package prepare -- python -m src.prepare.__main__ data/raw data/prepared
+    cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw data/prepared
     deps:
       - apps/prepare/src/prepare
       - data/raw
@@ -8,7 +8,7 @@ stages:
       - data/prepared
 
   featurize:
-    cmd: uv run --package featurize -- python -m src.featurize.__main__ data/prepared data/features
+    cmd: uv run --package featurize -- python -m featurize.__main__ data/prepared data/features
     deps:
       - apps/featurize/src/featurize
       - data/prepared
@@ -16,11 +16,20 @@ stages:
       - data/features
 
   train:
-    cmd: uv run --package train -- python -m src.train.main data/features models/model.pkl metrics.json
+    cmd: uv run --package train -- python -m train.train data/features models/model.pkl metrics.json
     deps:
       - apps/train/src/train
       - data/features
     outs:
       - models/model.pkl
+    metrics:
+      - metrics.json
+
+  evaluate:
+    cmd: uv run --package evaluate -- python -m evaluate.main models/model.pkl data/test metrics.json
+    deps:
+      - apps/evaluate/src/evaluate
+      - models/model.pkl
+      - data/test
     metrics:
       - metrics.json
