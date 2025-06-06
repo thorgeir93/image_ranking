@@ -46,20 +46,20 @@ stages:
       nfiles: 26
     - path: data/raw/bad
       hash: md5
-      md5: a16b6127ff35c0fdf8a298f17376910f.dir
-      size: 65846836
-      nfiles: 265
+      md5: 1b8baad81a9a098b5a6ce95e904ed0a5.dir
+      size: 64516447
+      nfiles: 264
     outs:
     - path: data/prepared/lower_body/bad
       hash: md5
-      md5: 23c284f00cfc28ebad25090b1a3fb7ba.dir
-      size: 10567590
-      nfiles: 137
+      md5: 07ba0562d235da1875196fb88a5e7c1f.dir
+      size: 10549312
+      nfiles: 136
     - path: data/prepared/upper_body/bad
       hash: md5
-      md5: f881c3560518f076edca364ad3616a58.dir
-      size: 12645075
-      nfiles: 137
+      md5: 2e81e9385252d4ac783ffeaeaa419ef7.dir
+      size: 12628803
+      nfiles: 136
   prepare-good:
     cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/good
       data/prepared
