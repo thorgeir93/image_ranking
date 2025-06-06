@@ -43,7 +43,7 @@ def run_workflow(
     # Define subdirectories (will use faces_dir if save=True)
     cropped_dir = workflow_dir / "cropped"
     sharp_dir = workflow_dir / "sharp"
-    final_dir = workflow_dir / "final"
+    final_dir = workflow_dir
 
     # Always create faces_dir (if saving) so it's ready
     final_dir.mkdir(parents=True, exist_ok=True)
