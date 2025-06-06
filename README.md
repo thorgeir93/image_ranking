@@ -1,5 +1,32 @@
 # Running style training model
 
+## Visulize the workflow
+
+```
+$ uv run dvc dag
+ +---------+   
+ | prepare |   
+ +---------+   
+      *        
+      *        
+      *        
++-----------+  
+| featurize |  
++-----------+  
+      *        
+      *        
+      *        
+  +-------+    
+  | train |    
+  +-------+    
+      *        
+      *        
+      *        
++----------+   
+| evaluate |   
++----------+   
+```
+
 ## Managing data/*
 
 ### Example - adding new image to data/raw
