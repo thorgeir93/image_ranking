@@ -15,3 +15,6 @@ data/raw
 data/prepare
 data/featurize
 models/*
+
+# VScode
+.vscode
