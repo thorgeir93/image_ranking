@@ -3,6 +3,7 @@ stages:
     cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/bad data/prepared
     deps:
       - apps/prepare/src/prepare
+      - data/raw/bad
     outs:
       - data/prepared/lower_body/bad
       - data/prepared/upper_body/bad
@@ -11,6 +12,7 @@ stages:
     cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/good data/prepared
     deps:
       - apps/prepare/src/prepare
+      - data/raw/good
     outs:
       - data/prepared/lower_body/good
       - data/prepared/upper_body/good

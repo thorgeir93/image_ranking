@@ -75,8 +75,8 @@ def run_workflow(
 
     # Save final images if requested
     if save:
-        save_split_images(upper_images, "upper", final_dir)
-        save_split_images(lower_images, "lower", final_dir)
+        save_split_images(upper_images, "upper_body", final_dir)
+        save_split_images(lower_images, "lower_body", final_dir)
 
 
     # TODO: think about saving as well, we do not need to clean if we do not save I guess.
