@@ -1,4 +1,4 @@
-default:
+run:
     uv run dvc repro
 
 prepare:
