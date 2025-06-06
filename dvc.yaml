@@ -3,7 +3,6 @@ stages:
     cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw data/prepared
     deps:
       - apps/prepare/src/prepare
-      - data/raw
     outs:
       - data/prepared
 
