@@ -1,10 +1,10 @@
 stages:
-  prepare:
-    cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw data/prepared
+  prepare-lower-body-bad:
+    cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/lower_body/bad data/prepared/lower_body/bad
     deps:
       - apps/prepare/src/prepare
     outs:
-      - data/prepared
+      - data/prepared/lower_body/bad
 
   featurize:
     cmd: uv run --package featurize -- python -m featurize.__main__ data/prepared data/features

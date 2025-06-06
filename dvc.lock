@@ -20,3 +20,18 @@ stages:
       md5: d751713988987e9331980363e24189ce.dir
       size: 0
       nfiles: 0
+  prepare-lower-body-bad:
+    cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/lower_body/bad
+      data/prepared/lower_body/bad
+    deps:
+    - path: apps/prepare/src/prepare
+      hash: md5
+      md5: 87c0fd2715ff1d3fb5afa45c46f607d1.dir
+      size: 50993
+      nfiles: 26
+    outs:
+    - path: data/prepared/lower_body/bad
+      hash: md5
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
