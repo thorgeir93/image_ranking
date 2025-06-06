@@ -11,9 +11,9 @@ stages:
       nfiles: 26
     - path: data/raw
       hash: md5
-      md5: 6df3c473448e9c7477158245146d398c.dir
-      size: 22420802
-      nfiles: 271
+      md5: 664eaeb862daecfe80ef62125cf8c28e.dir
+      size: 23248068
+      nfiles: 272
     outs:
     - path: data/prepared
       hash: md5
