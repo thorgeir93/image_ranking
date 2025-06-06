@@ -23,7 +23,7 @@ stages:
     outs:
       - models/model.pkl
     metrics:
-      - metrics.json
+      - metrics_train.json
 
   evaluate:
     cmd: uv run --package evaluate -- python -m evaluate.main models/model.pkl data/test metrics.json
@@ -32,4 +32,4 @@ stages:
       - models/model.pkl
       - data/test
     metrics:
-      - metrics.json
+      - metrics_eval.json
