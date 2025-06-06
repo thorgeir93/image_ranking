@@ -35,3 +35,43 @@ stages:
       md5: d751713988987e9331980363e24189ce.dir
       size: 0
       nfiles: 0
+  prepare-bad:
+    cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/bad
+      data/prepared
+    deps:
+    - path: apps/prepare/src/prepare
+      hash: md5
+      md5: be733d2c024aa02458f141c178fc033a.dir
+      size: 51013
+      nfiles: 26
+    outs:
+    - path: data/prepared/lower_body/bad
+      hash: md5
+      md5: 07ba0562d235da1875196fb88a5e7c1f.dir
+      size: 10549312
+      nfiles: 136
+    - path: data/prepared/upper_body/bad
+      hash: md5
+      md5: 2e81e9385252d4ac783ffeaeaa419ef7.dir
+      size: 12628803
+      nfiles: 136
+  prepare-good:
+    cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/good
+      data/prepared
+    deps:
+    - path: apps/prepare/src/prepare
+      hash: md5
+      md5: be733d2c024aa02458f141c178fc033a.dir
+      size: 51013
+      nfiles: 26
+    outs:
+    - path: data/prepared/lower_body/good
+      hash: md5
+      md5: dcd5899c629e77f1f9b043600fa7fdd4.dir
+      size: 11871490
+      nfiles: 135
+    - path: data/prepared/upper_body/good
+      hash: md5
+      md5: 74a704fc14c2228404561e40fe005a11.dir
+      size: 13704621
+      nfiles: 135

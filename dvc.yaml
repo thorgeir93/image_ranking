@@ -1,37 +1,46 @@
 stages:
-  prepare-lower-body-bad:
-    cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/lower_body/bad data/prepared/lower_body/bad
+  prepare-bad:
+    cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/bad data/prepared
     deps:
       - apps/prepare/src/prepare
     outs:
       - data/prepared/lower_body/bad
+      - data/prepared/upper_body/bad
 
-  featurize:
-    cmd: uv run --package featurize -- python -m featurize.__main__ data/prepared data/features
+  prepare-good:
+    cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/good data/prepared
+    deps:
+      - apps/prepare/src/prepare
+    outs:
+      - data/prepared/lower_body/good
+      - data/prepared/upper_body/good
+
+  featurize-lower-body:
+    cmd: uv run --package featurize -- python -m featurize.__main__ data/prepared/lower_body data/features
     deps:
       - apps/featurize/src/featurize
-      - data/prepared
+      - data/prepared/lower_body
     outs:
-      - data/features
+      - data/features/lower_body
 
-  train:
-    cmd: uv run --package train -- python -m train.train data/features models/model.pkl metrics.json
+  train-lower-body:
+    cmd: uv run --package train -- python -m train.train data/features/lower_body models/model_lower_body.pkl metrics_train_lower_body.json
     deps:
       - apps/train/src/train
-      - data/features
+      - data/features/lower_body
     outs:
-      - models/model.pkl
+      - models/model_lower_body.pkl
     metrics:
-      - metrics_train.json
+      - metrics_train_lower_body.json
 
-  evaluate:
-    cmd: uv run --package evaluate -- python -m evaluate.main models/model.pkl data/test metrics.json
+  evaluate-lower-body:
+    cmd: uv run --package evaluate -- python -m evaluate.main models/model.pkl data/test metrics_.json
     deps:
       - apps/evaluate/src/evaluate
-      - models/model.pkl
+      - models/model_lower_body.pkl
       - data/test
     metrics:
-      - metrics_eval.json
+      - metrics_eval_lower_body.json
 
 params:
     - params.yaml
