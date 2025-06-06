@@ -19,11 +19,6 @@ stages:
     deps:
       - apps/train/src/train
       - data/features
-    # TODO: use params here to be able to track them
-    # params: # from params.yaml
-    #   - learning_rate
-    #   - nn.epochs
-    #   - nn.batch_size
     outs:
       - models/model.pkl
     metrics:
@@ -37,3 +32,6 @@ stages:
       - data/test
     metrics:
       - metrics_eval.json
+
+params:
+    - params.yaml
