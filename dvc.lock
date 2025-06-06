@@ -1,0 +1,22 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw
+      data/prepared
+    deps:
+    - path: apps/prepare/src/prepare
+      hash: md5
+      md5: 91cf3f5faf5e8c1a4e594b1005078a5d.dir
+      size: 51021
+      nfiles: 26
+    - path: data/raw
+      hash: md5
+      md5: 6df3c473448e9c7477158245146d398c.dir
+      size: 22420802
+      nfiles: 271
+    outs:
+    - path: data/prepared
+      hash: md5
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
