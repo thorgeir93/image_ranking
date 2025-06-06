@@ -35,3 +35,16 @@ stages:
 
 params:
     - params.yaml
+
+# TODO: specify artifact used by the project, 
+# example from https://dvc.org/doc/user-guide/project-structure/dvcyaml-files :
+# artifacts:
+#   cv-classification: # artifact ID (name )
+#     path: models/resnet.pt
+#     type: model
+#     desc: 'CV classification model, ResNet50'
+#     labels:
+#       - resnet50
+#       - classification
+#     meta:
+#       framework: pytorch
