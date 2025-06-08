@@ -33,7 +33,8 @@ def run_workflow_command(
     source_dir: Path = typer.Argument(
         ..., help="Path to source directory with images."
     ),
-    workflow_dir: Path = typer.Argument(..., help="Path to workflow output directory."),
+    output_dir_upper_body: Path = typer.Argument(..., help="Path to uppper body output directory."),
+    output_dir_lower_body: Path = typer.Argument(..., help="Path to lower body output directory."),
     model_path: str = typer.Option(
         "yolov8n.pt",
         "--model",
@@ -65,7 +66,8 @@ def run_workflow_command(
 ) -> None:
     run_workflow(
         source_dir=source_dir,
-        workflow_dir=workflow_dir,
+        output_upper_body_dir=output_dir_upper_body,
+        output_lower_body_dir=output_dir_lower_body,
         model_path=model_path,
         min_confidence=min_confidence,
         blur_threshold=blur_threshold,

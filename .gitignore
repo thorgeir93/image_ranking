@@ -13,10 +13,11 @@ wheels/
 yolov8n.pt
 data/raw/train
 data/raw/evaluate
-data/prepare/train
-data/prepare/evulate
-data/featurize/train
-data/featurize/evaluate
+data/prepared/
+data/prepared/train
+data/prepared/evulate
+data/features/train
+data/features/evaluate
 models/*
 
 # VScode

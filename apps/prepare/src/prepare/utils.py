@@ -66,6 +66,7 @@ def save_images(
     Example name_func:
     lambda image_path, img, meta: f"{image_path.stem}_person.jpg"
     """
+
     log.info("Saving images", count=len(images), destination_dir=str(destination_dir))
 
     for image_path, img, *meta in images:
@@ -79,19 +80,10 @@ def save_images(
     log.info("Finished saving images", total_saved=len(images))
 
 
-def save_split_images(images: list, split_name: str, final_dir: Path) -> None:
-    log.info(f"Saving final images ({split_name} body)")
+def store_images(images: list, output_dir: Path) -> None:
     for image_path, img, *meta in images:
-        label = "good" if "good" in str(image_path.parent) else "bad"
-
-        save_dir = final_dir / split_name / label
-        save_dir.mkdir(parents=True, exist_ok=True)
-
-        output_path = save_dir / f"{image_path.stem}_{split_name}.jpg"
-
+        output_path = output_dir / f"{image_path.name}"
         cv2.imwrite(str(output_path), img)
-
-        log.debug("Saved image", output_path=str(output_path), label=label, split=split_name)
 
 
 def split_upper_lower_image(img: np.ndarray) -> tuple[np.ndarray, np.ndarray]:

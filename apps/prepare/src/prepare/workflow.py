@@ -5,9 +5,8 @@ from prepare.processes.crop import get_cropped_persons_from_directory
 from prepare.processes.face import filter_images_with_faces
 from prepare.processes.blur import filter_sharp_images_from_images
 from prepare.utils import (
-    save_images,
-    save_split_images,
     split_upper_lower,
+    store_images,
     validate_input_dir,
     validate_output_dir,
 )
@@ -18,7 +17,8 @@ log = get_logger()
 
 def run_workflow(
     source_dir: Path,
-    workflow_dir: Path,
+    output_upper_body_dir: Path,
+    output_lower_body_dir: Path,
     model_path: str,
     min_confidence: float,
     blur_threshold: float,
@@ -38,18 +38,18 @@ def run_workflow(
 
     # Validate paths
     source_dir = validate_input_dir(source_dir)
-    workflow_dir = validate_output_dir(workflow_dir)
+    output_upper_body_dir = validate_output_dir(output_upper_body_dir)
+    output_lower_body_dir = validate_output_dir(output_lower_body_dir)
 
     # Define subdirectories (will use faces_dir if save=True)
-    cropped_dir = workflow_dir / "cropped"
-    sharp_dir = workflow_dir / "sharp"
-    final_dir = workflow_dir
+    # final_dir = workflow_dir
 
     # Always create faces_dir (if saving) so it's ready
-    final_dir.mkdir(parents=True, exist_ok=True)
+    output_upper_body_dir.mkdir(parents=True, exist_ok=True)
+    output_lower_body_dir.mkdir(parents=True, exist_ok=True)
 
     log.info(
-        "Starting workflow", source_dir=str(source_dir), workflow_dir=str(workflow_dir)
+        "Starting workflow", source_dir=str(source_dir), output_upper_body_dir=str(output_upper_body_dir), output_lower_body_dir=str(output_lower_body_dir)
     )
 
     # Load YOLO model once
@@ -73,22 +73,21 @@ def run_workflow(
     log.info("STEP 4: Split images into upper and lower body")
     upper_images, lower_images = split_upper_lower(images_with_faces)
 
-    # Save final images if requested
     if save:
-        save_split_images(upper_images, "upper_body", final_dir)
-        save_split_images(lower_images, "lower_body", final_dir)
+        store_images(upper_images, output_upper_body_dir)
+        store_images(lower_images, output_lower_body_dir)
 
 
     # TODO: think about saving as well, we do not need to clean if we do not save I guess.
     # Optional cleanup
-    if clean:
-        log.info("Cleaning intermediate folders if they exist")
-        for folder in [cropped_dir, sharp_dir]:
-            if folder.exists():
-                try:
-                    shutil.rmtree(folder)
-                    log.info("Deleted folder", folder=str(folder))
-                except Exception as e:
-                    log.error("Error deleting folder", folder=str(folder), error=str(e))
+    # if clean:
+    #     log.info("Cleaning intermediate folders if they exist")
+    #     for folder in [cropped_dir, sharp_dir]:
+    #         if folder.exists():
+    #             try:
+    #                 shutil.rmtree(folder)
+    #                 log.info("Deleted folder", folder=str(folder))
+    #             except Exception as e:
+    #                 log.error("Error deleting folder", folder=str(folder), error=str(e))
 
     return images_with_faces
