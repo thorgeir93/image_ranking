@@ -3,4 +3,4 @@ outs:
   size: 143797608
   nfiles: 548
   hash: md5
-  path: raw
+  path: train

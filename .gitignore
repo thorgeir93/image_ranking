@@ -11,10 +11,14 @@ wheels/
 
 # models
 yolov8n.pt
-data/raw
-data/prepare
-data/featurize
+data/raw/train
+data/raw/evaluate
+data/prepare/train
+data/prepare/evulate
+data/featurize/train
+data/featurize/evaluate
 models/*
 
 # VScode
 .vscode
+/metrics_train_lower_body.json
