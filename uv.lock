@@ -11,6 +11,7 @@ resolution-markers = [
 members = [
     "common-utils",
     "data-schemas",
+    "evaluate",
     "featurize",
     "prepare",
     "running-style-training",
@@ -583,6 +584,11 @@ sdist = { url = "https://files.pythonhosted.org/packages/ea/8d/a7121ffe5f402dc01
 wheels = [
     { url = "https://files.pythonhosted.org/packages/35/a8/365059bbcd4572cbc41de17fd5b682be5868b218c3c5479071865cab9078/entrypoints-0.4-py3-none-any.whl", hash = "sha256:f174b5ff827504fd3cd97cc3f8649f3693f51538c7e4bdf3ef002c8429d42f9f", size = 5294 },
 ]
+
+[[package]]
+name = "evaluate"
+version = "0.1.0"
+source = { editable = "apps/evaluate" }
 
 [[package]]
 name = "featurize"
