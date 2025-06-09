@@ -1,6 +1,16 @@
 # Running style training model
 
-## Visulize the workflow
+## Background
+This project was created to make photography post-processing faster and easier. Editing photos manually takes a lot of time and effort. By training a model to score images based on running style, we can speed up this process.
+
+## About
+This project uses training data where a running person have been cropped out of image and split into lower and upper body (prepare stage).
+The output model should be able to determine from running legs whether it is a good style or a bad style, scoring from 0.0 to 1.0.
+
+## Version control
+This project uses `dvc` to version control the dataset, models, parameters and the code.
+
+## Visulize the DVC workflow
 
 ```
 $ uv run dvc dag
