@@ -1,48 +1,128 @@
 stages:
-  prepare-bad:
-    cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/bad data/prepared
-    deps:
-      - apps/prepare/src/prepare
-      - data/raw/bad
-    outs:
-      - data/prepared/lower_body/bad
-      - data/prepared/upper_body/bad
+  prepare:
+    foreach:
+      - name: prepare-train-good
+        input_dir: ${prepare.train.input_dir}/good
+        classification: good
+        output_dir_upper_body: ${prepare.train.output_dirs.upper_body}/good
+        output_dir_lower_body: ${prepare.train.output_dirs.lower_body}/good
+      - name: prepare-train-bad
+        input_dir: ${prepare.train.input_dir}/bad
+        classification: bad
+        output_dir_upper_body: ${prepare.train.output_dirs.upper_body}/bad
+        output_dir_lower_body: ${prepare.train.output_dirs.lower_body}/bad
+      - name: prepare-evaluate-good
+        input_dir: ${prepare.evaluate.input_dir}/good
+        classification: good
+        output_dir_upper_body: ${prepare.evaluate.output_dirs.upper_body}/good
+        output_dir_lower_body: ${prepare.evaluate.output_dirs.lower_body}/good
+      - name: prepare-evaluate-bad
+        input_dir: ${prepare.evaluate.input_dir}/bad
+        classification: bad
+        output_dir_upper_body: ${prepare.evaluate.output_dirs.upper_body}/bad
+        output_dir_lower_body: ${prepare.evaluate.output_dirs.lower_body}/bad
+    do:
+      cmd: >
+        uv run --package prepare -- python -m prepare.__main__ run-workflow
+        ${item.input_dir}
+        ${item.output_dir_upper_body}
+        ${item.output_dir_lower_body}
+        --min-confidence ${prepare.min_confidence}
+        --blur-threshold ${prepare.blur_threshold}
+      deps:
+        - apps/prepare/src/prepare
+        - ${item.input_dir}
+      outs:
+        - ${item.output_dir_upper_body}
+        - ${item.output_dir_lower_body}
 
-  prepare-good:
-    cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/good data/prepared
-    deps:
-      - apps/prepare/src/prepare
-      - data/raw/good
-    outs:
-      - data/prepared/lower_body/good
-      - data/prepared/upper_body/good
+      # TODO: From this page: https://dvc.org/doc/command-reference/params#description
+      #       it seems that we need to specify the params from the params.yaml file to make them versioned.
+      #       But this is error-prone, because if we change the params.yaml file, we need to remember to change the dvc.yaml file as well.
+      # params:
+      #   - prepare.input_dir
+      #   - prepare.output_dir.upper_body
+      #   - prepare.output_dir.lower_body
+      #   - prepare.min_confidence
+      #   - prepare.blur_threshold
 
-  featurize-lower-body:
-    cmd: uv run --package featurize -- python -m featurize.__main__ data/prepared/lower_body data/features
-    deps:
-      - apps/featurize/src/featurize
-      - data/prepared/lower_body
-    outs:
-      - data/features/lower_body
+  featurize:
+    foreach:
+      - name: featurize-train-lower-body
+        input_dir: ${prepare.train.output_dirs.lower_body}
+        output_file: ${featurize.train.output_files.lower_body}
+      - name: featurize-evaluate-lower-body
+        input_dir: ${prepare.evaluate.output_dirs.lower_body}
+        output_file: ${featurize.evaluate.output_files.lower_body}
+      # - name: train_upper_body
+      #   input_dir: ${prepare.train.output_dirs.upper_body}
+      #   output_file: ${featurize.train.output_files.upper_body}
+      # - name: evaluate_upper_body
+      #   input_dir: ${prepare.evaluate.output_dirs.upper_body}
+      #   output_file: ${featurize.evaluate.output_files.upper_body}
+    do:
+      cmd: >
+        uv run --package featurize -- python -m featurize.__main__
+        ${item.input_dir}
+        ${item.output_file}
+        --batch-size ${featurize.batch_size}
+      deps:
+        - apps/featurize/src/featurize
+        - ${item.input_dir}
+      outs:
+        - ${item.output_file}
 
-  train-lower-body:
-    cmd: uv run --package train -- python -m train.train data/features/lower_body models/model_lower_body.pkl metrics_train_lower_body.json
-    deps:
-      - apps/train/src/train
-      - data/features/lower_body
-    outs:
-      - models/model_lower_body.pkl
-    metrics:
-      - metrics_train_lower_body.json
+  train:
+    foreach:
+      - name: train-lower-body
+        input_file: ${featurize.train.output_files.lower_body}
+        output_model: ${train.models.lower_body}
+        metric: ${train.metrics.lower_body}
+      # - name: upper_body
+      #   input_file: ${featurize.train.output_files.upper_body}
+      #   output_model: ${train.models.upper_body}
+      #   metric: ${train.metrics.upper_body}
+    do:
+      cmd: >
+        uv run --package train -- python -m train.train
+        ${item.input_file}
+        --epochs ${train.epochs}
+        --batch-size ${train.batch_size}
+        --lr ${train.lr}
+        --dropout ${train.dropout}
+        --output-model ${item.output_model}
+        --metric ${item.metric}
+      deps:
+        - apps/train/src/train
+        - ${item.input_file}
+      outs:
+        - ${item.output_model}
+      metrics:
+        - ${item.metric}
 
-  evaluate-lower-body:
-    cmd: uv run --package evaluate -- python -m evaluate.main models/model.pkl data/test metrics_.json
-    deps:
-      - apps/evaluate/src/evaluate
-      - models/model_lower_body.pkl
-      - data/test
-    metrics:
-      - metrics_eval_lower_body.json
+  evaluate:
+    foreach:
+      - name: lower-body
+        input_file: ${featurize.evaluate.output_files.lower_body}
+        model: ${train.models.lower_body}
+        metric: ${evaluate.metrics.lower_body}
+      # - name: upper_body
+      #   input_file: ${featurize.evaluate.output_files.upper_body}
+      #   model: ${train.models.upper_body}
+      #   metric: ${evaluate.metrics.upper_body}
+    do:
+      cmd: >
+        uv run --package evaluate -- python -m evaluate.evaluate
+        ${item.input_file}
+        --model ${item.model}
+        --metric ${item.metric}
+      deps:
+        - apps/evaluate/src/evaluate
+        - ${item.input_file}
+        - ${item.model}
+      metrics:
+        - ${item.metric}
+
 
 params:
     - params.yaml

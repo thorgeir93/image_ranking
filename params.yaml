@@ -1,0 +1,49 @@
+prepare:
+  min_confidence: 0.8
+  blur_threshold: 100.0
+  train:
+    input_dir: data/raw/train
+    output_dirs: 
+      upper_body: data/prepared/train/upper_body
+      lower_body: data/prepared/train/lower_body
+  evaluate:
+    input_dir: data/raw/evaluate
+    output_dirs: 
+      upper_body: data/prepared/evaluate/upper_body
+      lower_body: data/prepared/evaluate/lower_body
+  
+  # data_dir: data/raw
+  # input_data_dirs: [train, evaluate]
+  # classification: [bad, good]
+  # output_dir:
+  #   lower_body: data/prepared/lower_body
+  #   upper_body: data/prepared/upper_body
+
+featurize:
+  batch_size: 32
+  train:
+    output_files:
+      upper_body: data/features/train/upper_body.parquet
+      lower_body: data/features/train/lower_body.parquet
+  evaluate:
+    output_files:
+      upper_body: data/features/evaluate/upper_body.parquet
+      lower_body: data/features/evaluate/lower_body.parquet
+
+train:
+  epochs: 10
+  batch_size: 32
+  lr: 0.001
+  dropout: 0.5
+  models:
+    upper_body: models/model_upper_body.pkl
+    lower_body: models/model_lower_body.pkl
+  metrics:
+    upper_body: metrics_train_upper_body.json
+    lower_body: metrics_train_lower_body.json
+
+evaluate:
+  output_file: data/evaluation/results.json
+  metrics:
+    upper_body: metrics_eval_upper_body.json
+    lower_body: metrics_eval_lower_body.json
