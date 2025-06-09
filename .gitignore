@@ -13,9 +13,8 @@ wheels/
 yolov8n.pt
 data/raw/train
 data/raw/evaluate
-data/prepared/
 data/prepared/train
-data/prepared/evulate
+data/prepared/evaluate
 data/features/train
 data/features/evaluate
 models/*
