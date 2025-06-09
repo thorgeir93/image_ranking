@@ -7,7 +7,9 @@ authors = [
     { name = "Þorgeir Eyfjörð Sigurðsson", email = "thorgeirsigurd@gmail.com" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "onnx>=1.18.0",
+]
 
 [build-system]
 requires = ["hatchling"]
