@@ -33,6 +33,7 @@ def build_model(feature_dim: int, dropout: float = 0.5) -> nn.Module:
     )
     return model
 
+
 def load_model(model_path: Path, feature_dim: int, dropout: float = 0.5) -> nn.Module:
     """Rebuild model structure and load state_dict."""
     model = build_model(feature_dim, dropout)
@@ -41,7 +42,10 @@ def load_model(model_path: Path, feature_dim: int, dropout: float = 0.5) -> nn.M
     model.eval()
     return model
 
-def evaluate_model(model: nn.Module, X: list[list[float]], y: list[int]) -> dict[str, float]:
+
+def evaluate_model(
+    model: nn.Module, X: list[list[float]], y: list[int]
+) -> dict[str, float]:
     """Run evaluation and compute metrics."""
     X_tensor = torch.tensor(X, dtype=torch.float32)
 
@@ -59,18 +63,28 @@ def evaluate_model(model: nn.Module, X: list[list[float]], y: list[int]) -> dict
 
     return metrics
 
+
 def save_metrics(metrics: dict[str, float], metric_file: Path) -> None:
     """Save metrics as JSON."""
     metric_file.parent.mkdir(parents=True, exist_ok=True)
     with metric_file.open("w") as f:
         json.dump(metrics, f, indent=4)
 
+
 @app.command()
 def main(
-    input_file: Path = typer.Argument(..., help="Path to featurized evaluation data (Parquet)"),
-    model: Path = typer.Option(..., "--model", help="Path to trained model (state_dict .pth / .pkl)"),
-    metric: Path = typer.Option(..., "--metric", help="Path to output metrics file (JSON)"),
-    dropout: float = typer.Option(0.5, "--dropout", help="Dropout used in the model (should match training)"),
+    input_file: Path = typer.Argument(
+        ..., help="Path to featurized evaluation data (Parquet)"
+    ),
+    model: Path = typer.Option(
+        ..., "--model", help="Path to trained model (state_dict .pth / .pkl)"
+    ),
+    metric: Path = typer.Option(
+        ..., "--metric", help="Path to output metrics file (JSON)"
+    ),
+    dropout: float = typer.Option(
+        0.5, "--dropout", help="Dropout used in the model (should match training)"
+    ),
 ) -> None:
     """Evaluate PyTorch model on given dataset and save metrics."""
     typer.echo(f"Loading evaluation data from: {input_file}")
@@ -79,7 +93,6 @@ def main(
     typer.echo(f"Detected feature_dim={feature_dim}")
 
     model_instance = load_model(model, feature_dim, dropout)
-
 
     typer.echo(f"Loading model from: {model}")
     model_instance = load_model(model, feature_dim, dropout)
@@ -92,6 +105,7 @@ def main(
     save_metrics(metrics, metric)
 
     typer.echo("Evaluation completed.")
+
 
 if __name__ == "__main__":
     app()

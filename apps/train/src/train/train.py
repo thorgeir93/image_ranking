@@ -79,7 +79,6 @@ def train(
     df = pl.read_parquet(parquet_path)
     log.info("Parquet loaded", num_rows=df.height)
 
-
     # # Prepare tensors
     # features = torch.tensor(df["features"].to_numpy(), dtype=torch.float32)
     # labels = torch.tensor(df["label"].to_numpy(), dtype=torch.float32).unsqueeze(1)
@@ -95,7 +94,6 @@ def train(
 
     log.info("Feature tensor", shape=tuple(features.shape))
     log.info("Label tensor", shape=tuple(labels.shape))
-
 
     # Create dataset + loader
     dataset = TensorDataset(features, labels)

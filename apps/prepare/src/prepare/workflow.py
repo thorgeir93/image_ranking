@@ -49,7 +49,10 @@ def run_workflow(
     output_lower_body_dir.mkdir(parents=True, exist_ok=True)
 
     log.info(
-        "Starting workflow", source_dir=str(source_dir), output_upper_body_dir=str(output_upper_body_dir), output_lower_body_dir=str(output_lower_body_dir)
+        "Starting workflow",
+        source_dir=str(source_dir),
+        output_upper_body_dir=str(output_upper_body_dir),
+        output_lower_body_dir=str(output_lower_body_dir),
     )
 
     # Load YOLO model once
@@ -76,7 +79,6 @@ def run_workflow(
     if save:
         store_images(upper_images, output_upper_body_dir)
         store_images(lower_images, output_lower_body_dir)
-
 
     # TODO: think about saving as well, we do not need to clean if we do not save I guess.
     # Optional cleanup

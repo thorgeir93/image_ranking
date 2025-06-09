@@ -14,9 +14,12 @@ from tqdm import tqdm
 app = typer.Typer()
 log = structlog.get_logger()
 
+
 @app.command()
 def featurize(
-    input_dir: Path = typer.Argument(..., help="Path to input directory (good/bad subfolders)."),
+    input_dir: Path = typer.Argument(
+        ..., help="Path to input directory (good/bad subfolders)."
+    ),
     output: Path = typer.Argument(..., help="Output Parquet file path."),
     batch_size: int = typer.Option(32, "--batch-size", "-b", help="Batch size."),
 ) -> None:
@@ -33,11 +36,13 @@ def featurize(
     model.eval()
 
     # Transforms (same as train)
-    transform = transforms.Compose([
-        transforms.Resize((224, 224)),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-    ])
+    transform = transforms.Compose(
+        [
+            transforms.Resize((224, 224)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        ]
+    )
 
     # Dataset
     dataset = ImageFolder(root=str(input_dir), transform=transform)
@@ -63,7 +68,7 @@ def featurize(
                 image_path = dataset.samples[len(rows["image_path"])][0]
                 label = labels[i]
                 feature_vector = features[i].tolist()
-                
+
                 rows["image_path"].append(image_path)
                 rows["label"].append(label)
                 rows["features"].append(feature_vector)
@@ -75,6 +80,6 @@ def featurize(
 
     log.info("Featurization complete", output=str(output), num_rows=df.height)
 
+
 if __name__ == "__main__":
     app()
-
