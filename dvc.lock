@@ -105,70 +105,76 @@ stages:
       md5: 25de5d4694e5408ec876137ac2d60631
       size: 599866
   prepare@0:
-    cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/bad
-      data/prepared/lower_body/bad data/prepared/lower_body/bad --min-confidence 0.8
+    cmd: "uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/train/good
+      data/prepared/train/upper_body/good data/prepared/train/lower_body/good --min-confidence
+      0.8 --blur-threshold 100.0\n"
     deps:
     - path: apps/prepare/src/prepare
       hash: md5
-      md5: bbebad8c1a4a4fe952061ca7f37d5d09.dir
+      md5: 4250b0a71b9daea9bab4211da1f946c9.dir
       size: 50038
       nfiles: 26
-    - path: data/raw/bad
-      hash: md5
-      md5: 1b8baad81a9a098b5a6ce95e904ed0a5.dir
-      size: 64516447
-      nfiles: 264
-    outs:
-    - path: data/prepared/lower_body/bad
-      hash: md5
-      md5: 3e6a5572ecb8fc233d4f5a2e37bdf656.dir
-      size: 17614560
-      nfiles: 214
-  prepare@1:
-    cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/good
-      data/prepared/upper_body/good data/prepared/lower_body/good --min-confidence
-      0.8
-    deps:
-    - path: apps/prepare/src/prepare
-      hash: md5
-      md5: bbebad8c1a4a4fe952061ca7f37d5d09.dir
-      size: 50038
-      nfiles: 26
-    - path: data/raw/good
+    - path: data/raw/train/good
       hash: md5
       md5: 0d69d6b4a103cd688df2b9fe540399f5.dir
       size: 79281161
       nfiles: 284
     outs:
-    - path: data/prepared/lower_body/good
-      hash: md5
-      md5: 85e5236276bd3e51ae8e5f1b8897da74.dir
-      size: 26710784
-      nfiles: 252
-    - path: data/prepared/upper_body/good
+    - path: data/prepared/train/lower_body/good
       hash: md5
       md5: 2461ff7f2935ff65df42908bffd38dbd.dir
       size: 22845985
       nfiles: 252
+    - path: data/prepared/train/upper_body/good
+      hash: md5
+      md5: 85e5236276bd3e51ae8e5f1b8897da74.dir
+      size: 26710784
+      nfiles: 252
+  prepare@1:
+    cmd: "uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/train/bad
+      data/prepared/train/upper_body/bad data/prepared/train/lower_body/bad --min-confidence
+      0.8 --blur-threshold 100.0\n"
+    deps:
+    - path: apps/prepare/src/prepare
+      hash: md5
+      md5: 4250b0a71b9daea9bab4211da1f946c9.dir
+      size: 50038
+      nfiles: 26
+    - path: data/raw/train/bad
+      hash: md5
+      md5: 1b8baad81a9a098b5a6ce95e904ed0a5.dir
+      size: 64516447
+      nfiles: 264
+    outs:
+    - path: data/prepared/train/lower_body/bad
+      hash: md5
+      md5: 3e6a5572ecb8fc233d4f5a2e37bdf656.dir
+      size: 17614560
+      nfiles: 214
+    - path: data/prepared/train/upper_body/bad
+      hash: md5
+      md5: 4c450511d6d3609fa3c0b9e6e8b36705.dir
+      size: 20711845
+      nfiles: 214
   featurize@0:
-    cmd: uv run --package featurize -- python -m featurize.__main__ data/prepared/lower_body
-      data/features/lower_body.parquet --batch-size 32
+    cmd: "uv run --package featurize -- python -m featurize.__main__ data/prepared/train/lower_body
+      data/features/train/lower_body.parquet --batch-size 32\n"
     deps:
     - path: apps/featurize/src/featurize
       hash: md5
       md5: 1fa3840fc5dbc055d9d010f1514b8dee.dir
       size: 7180
       nfiles: 4
-    - path: data/prepared/lower_body
+    - path: data/prepared/train/lower_body
       hash: md5
-      md5: 97756d4ab6a0ac11a11e655d960f4800.dir
-      size: 40460545
-      nfiles: 466
+      md5: 383750d3e6df9867fd82783cf2e12654.dir
+      size: 40460556
+      nfiles: 467
     outs:
-    - path: data/features/lower_body.parquet
+    - path: data/features/train/lower_body.parquet
       hash: md5
-      md5: 2185e98e04dc39d3b0a41dd5e1c65ce9
-      size: 1029755
+      md5: fe506ce1acc1f46b5eba25a7e6d14c17
+      size: 1029837
   prepare@bad:
     cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/bad
       data/prepared/upper_body/bad data/prepared/lower_body/bad --min-confidence 0.8
@@ -236,27 +242,27 @@ stages:
       size: 26710784
       nfiles: 252
   featurize@1:
-    cmd: uv run --package featurize -- python -m featurize.__main__ data/prepared/upper_body
-      data/features/upper_body.parquet --batch-size 32
+    cmd: "uv run --package featurize -- python -m featurize.__main__ data/prepared/evaluate/lower_body
+      data/features/evaluate/lower_body.parquet --batch-size 32\n"
     deps:
     - path: apps/featurize/src/featurize
       hash: md5
       md5: 1fa3840fc5dbc055d9d010f1514b8dee.dir
       size: 7180
       nfiles: 4
-    - path: data/prepared/upper_body
+    - path: data/prepared/evaluate/lower_body
       hash: md5
-      md5: e794524eb292c7fa0bfdfed15419fd6d.dir
-      size: 47422629
-      nfiles: 466
+      md5: 06acf36703149f9097825bbe0aef2fbe.dir
+      size: 194669
+      nfiles: 3
     outs:
-    - path: data/features/upper_body.parquet
+    - path: data/features/evaluate/lower_body.parquet
       hash: md5
-      md5: 2931b5ddfbb56b8ac6eb8456095f8439
-      size: 1030235
+      md5: 9f54185f82d94ad1dc6c57a8ae1c90d7
+      size: 6210
   train@0:
-    cmd: "uv run --package train -- python -m train.train data/features/lower_body.parquet
-      --epochs 10 --batch-size 32 --lr 0.001 --dropout 0.5 --output-model models/model_lower_body.pth
+    cmd: "uv run --package train -- python -m train.train data/features/train/lower_body.parquet
+      --epochs 10 --batch-size 32 --lr 0.001 --dropout 0.5 --output-model models/model_lower_body.pkl
       --metric metrics_train_lower_body.json\n"
     deps:
     - path: apps/train/src/train
@@ -264,16 +270,68 @@ stages:
       md5: ca3be0d735e307be9d5a5e09a9a4c943.dir
       size: 10901
       nfiles: 5
-    - path: data/features/lower_body.parquet
+    - path: data/features/train/lower_body.parquet
       hash: md5
-      md5: 2185e98e04dc39d3b0a41dd5e1c65ce9
-      size: 1029755
+      md5: fe506ce1acc1f46b5eba25a7e6d14c17
+      size: 1029837
     outs:
     - path: metrics_train_lower_body.json
       hash: md5
-      md5: d00f2fc72d5650a4235ba8ff8b7ba9fb
-      size: 105
-    - path: models/model_lower_body.pth
+      md5: 199f14b4ef958e67a16e0b01108b2292
+      size: 106
+    - path: models/model_lower_body.pkl
       hash: md5
-      md5: 3d7197deb96cea4dddd8c5e94ab15172
+      md5: beb161dea4936bc146f9a6a35520a340
       size: 4077
+  prepare@2:
+    cmd: "uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/evaluate/good
+      data/prepared/evaluate/upper_body/good data/prepared/evaluate/lower_body/good
+      --min-confidence 0.8 --blur-threshold 100.0\n"
+    deps:
+    - path: apps/prepare/src/prepare
+      hash: md5
+      md5: 4250b0a71b9daea9bab4211da1f946c9.dir
+      size: 50038
+      nfiles: 26
+    - path: data/raw/evaluate/good
+      hash: md5
+      md5: d5477667ac868886044d242cb591061f.dir
+      size: 1055344
+      nfiles: 1
+    outs:
+    - path: data/prepared/evaluate/lower_body/good
+      hash: md5
+      md5: 60c7f0636fd3e25c4d3c45226c07c79c.dir
+      size: 176380
+      nfiles: 1
+    - path: data/prepared/evaluate/upper_body/good
+      hash: md5
+      md5: 32035da638e381085fde949eadafc861.dir
+      size: 126471
+      nfiles: 1
+  prepare@3:
+    cmd: "uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/evaluate/bad
+      data/prepared/evaluate/upper_body/bad data/prepared/evaluate/lower_body/bad
+      --min-confidence 0.8 --blur-threshold 100.0\n"
+    deps:
+    - path: apps/prepare/src/prepare
+      hash: md5
+      md5: 4250b0a71b9daea9bab4211da1f946c9.dir
+      size: 50038
+      nfiles: 26
+    - path: data/raw/evaluate/bad
+      hash: md5
+      md5: edd4b326ba0cae331f51fb190aaf504b.dir
+      size: 1330389
+      nfiles: 1
+    outs:
+    - path: data/prepared/evaluate/lower_body/bad
+      hash: md5
+      md5: 0586018e6cdff5a0653c0ebfed64dee4.dir
+      size: 18278
+      nfiles: 1
+    - path: data/prepared/evaluate/upper_body/bad
+      hash: md5
+      md5: 138ba6a408ffb59630939fd35498d73e.dir
+      size: 16272
+      nfiles: 1
