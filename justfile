@@ -2,7 +2,7 @@ run:
     uv run dvc repro
 
 prepare:
-    uv run dvc repro prepare-lower-body-bad
+    uv run dvc repro prepare
     # uv run dvc repro prepare-lower-body-good
 
 init-dvc-localremote:
