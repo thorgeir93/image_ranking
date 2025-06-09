@@ -12,6 +12,7 @@ members = [
     "common-utils",
     "data-schemas",
     "evaluate",
+    "export",
     "featurize",
     "prepare",
     "running-style-training",
@@ -595,6 +596,11 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [{ name = "scikit-learn", specifier = ">=1.7.0" }]
+
+[[package]]
+name = "export"
+version = "0.1.0"
+source = { editable = "apps/export" }
 
 [[package]]
 name = "featurize"

@@ -123,6 +123,32 @@ stages:
       metrics:
         - ${item.metric}
 
+  export:
+    foreach:
+      - name: lower-body
+        input_model: ${train.models.lower_body}
+        output_model: ${export.models.lower_body}
+      # - name: upper_body
+      #   input_model: ${train.models.upper_body}
+      #   output_model: ${export.models.upper_body}
+    do:
+      cmd: >
+        uv run --package export -- python -m export.__main__
+        ${item.input_model}
+        ${item.output_model}
+        --format ${export.format}
+        --input-dim ${export.input_dim}
+        --dropout ${train.dropout}
+      deps:
+        - apps/export/src/export
+        - ${item.input_model}
+      outs:
+        - ${item.output_model}
+      params:
+        - export.format
+        - export.input_dim
+        - train.dropout
+
 
 params:
     - params.yaml

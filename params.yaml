@@ -47,3 +47,10 @@ evaluate:
   metrics:
     upper_body: metrics_eval_upper_body.json
     lower_body: metrics_eval_lower_body.json
+
+export:
+  format: onnx
+  input_dim: 512  # Adjust this if your feature vector has a different size
+  models:
+    upper_body: exported_models/upper_body.onnx
+    lower_body: exported_models/lower_body.onnx
