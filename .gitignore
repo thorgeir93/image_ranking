@@ -22,3 +22,4 @@ models/*
 # VScode
 .vscode
 /metrics_train_lower_body.json
+/metrics_eval_lower_body.json

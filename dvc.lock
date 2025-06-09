@@ -167,9 +167,9 @@ stages:
       nfiles: 4
     - path: data/prepared/train/lower_body
       hash: md5
-      md5: 383750d3e6df9867fd82783cf2e12654.dir
-      size: 40460556
-      nfiles: 467
+      md5: 97756d4ab6a0ac11a11e655d960f4800.dir
+      size: 40460545
+      nfiles: 466
     outs:
     - path: data/features/train/lower_body.parquet
       hash: md5
@@ -252,9 +252,9 @@ stages:
       nfiles: 4
     - path: data/prepared/evaluate/lower_body
       hash: md5
-      md5: 06acf36703149f9097825bbe0aef2fbe.dir
-      size: 194669
-      nfiles: 3
+      md5: 2a4d78fa3ced283ef5416561e2bf2024.dir
+      size: 194658
+      nfiles: 2
     outs:
     - path: data/features/evaluate/lower_body.parquet
       hash: md5
@@ -335,3 +335,25 @@ stages:
       md5: 138ba6a408ffb59630939fd35498d73e.dir
       size: 16272
       nfiles: 1
+  evaluate@0:
+    cmd: "uv run --package evaluate -- python -m evaluate.__main__ data/features/evaluate/lower_body.parquet
+      --model models/model_lower_body.pkl --metric metrics_eval_lower_body.json\n"
+    deps:
+    - path: apps/evaluate/src/evaluate
+      hash: md5
+      md5: 7451c10e2637b658e8824b11ab2a48f1.dir
+      size: 9381
+      nfiles: 5
+    - path: data/features/evaluate/lower_body.parquet
+      hash: md5
+      md5: 9f54185f82d94ad1dc6c57a8ae1c90d7
+      size: 6210
+    - path: models/model_lower_body.pkl
+      hash: md5
+      md5: beb161dea4936bc146f9a6a35520a340
+      size: 4077
+    outs:
+    - path: metrics_eval_lower_body.json
+      hash: md5
+      md5: 4d86cd8e65758898762a8f7ee4c21910
+      size: 79
