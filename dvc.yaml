@@ -112,7 +112,7 @@ stages:
       #   metric: ${evaluate.metrics.upper_body}
     do:
       cmd: >
-        uv run --package evaluate -- python -m evaluate.evaluate
+        uv run --package evaluate -- python -m evaluate.__main__
         ${item.input_file}
         --model ${item.model}
         --metric ${item.metric}
