@@ -39,7 +39,7 @@ def run_workflow_command(
     output_dir_lower_body: Path = typer.Argument(
         ..., help="Path to lower body output directory."
     ),
-    model_path: str = typer.Option(
+    model_path: Path = typer.Option(
         "yolov8n.pt",
         "--model",
         "-m",

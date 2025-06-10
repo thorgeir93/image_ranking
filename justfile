@@ -15,5 +15,9 @@ app name:
     (cd apps && uv init --build-backend hatch --lib {{name}})
     touch apps/{{name}}/src/{{snakecase(name)}}/__main__.py
 
+lib name:
+    mkdir -p libs
+    (cd libs && uv init --build-backend hatch --lib {{name}})
+
 fix:
     uv run ruff format .

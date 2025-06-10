@@ -1,11 +1,11 @@
 from pathlib import Path
 import shutil
 from ultralytics import YOLO
-from prepare.processes.crop import get_cropped_persons_from_directory
-from prepare.processes.face import filter_images_with_faces
-from prepare.processes.blur import filter_sharp_images_from_images
+from crop_image.processes.crop import get_cropped_persons_from_directory, load_yolo_model
+from crop_image.processes.face import filter_images_with_faces
+from crop_image.processes.blur import filter_sharp_images_from_images
+from crop_image.utils import split_upper_lower
 from prepare.utils import (
-    split_upper_lower,
     store_images,
     validate_input_dir,
     validate_output_dir,
@@ -57,7 +57,7 @@ def run_workflow(
 
     # Load YOLO model once
     log.info("Loading YOLO model", model_path=model_path)
-    model = YOLO(model_path)
+    model = load_yolo_model(model_path)
 
     # STEP 1: Crop persons
     log.info("STEP 1: Crop persons")
