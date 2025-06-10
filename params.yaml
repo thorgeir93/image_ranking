@@ -50,7 +50,7 @@ evaluate:
 
 export:
   format: onnx
-  input_dim: 512  # Adjust this if your feature vector has a different size
+  input_dim: 512
   models:
     upper_body: exported_models/upper_body.onnx
     lower_body: exported_models/lower_body.onnx
