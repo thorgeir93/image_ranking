@@ -11,6 +11,7 @@ import structlog
 
 log = structlog.get_logger(__name__)
 
+
 def load_yolo_model(model_path: Path) -> YOLO:
     if getattr(load_yolo_model, "__model", None) is not None:
         return load_yolo_model.__model
@@ -20,8 +21,8 @@ def load_yolo_model(model_path: Path) -> YOLO:
     else:
         log.error("YOLO model file does not exist or is invalid", model_path=model_path)
         raise FileNotFoundError(f"Model file not found: {model_path}")
-    
-    
+
+
 def get_cropped_persons(img: Any, model: YOLO, min_confidence: float) -> list:
     results = model(img, verbose=False)
     cropped_persons = []

@@ -5,6 +5,7 @@ import typer
 import cv2
 
 import structlog
+
 log = structlog.get_logger(__name__)
 
 

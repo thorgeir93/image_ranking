@@ -4,7 +4,7 @@ import numpy as np
 
 import structlog
 
-log = structlog.get_logger(__name__) 
+log = structlog.get_logger(__name__)
 
 
 def is_blurred(img: Any, threshold: float = 100.0) -> bool:
