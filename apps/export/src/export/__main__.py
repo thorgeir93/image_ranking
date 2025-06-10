@@ -18,11 +18,19 @@ def build_model(input_dim: int, dropout: float) -> nn.Module:
 
 @app.command()
 def export_model(
-    input_model: Path = typer.Argument(..., help="Path to trained model .pth (state_dict)."),
+    input_model: Path = typer.Argument(
+        ..., help="Path to trained model .pth (state_dict)."
+    ),
     output_model: Path = typer.Argument(..., help="Path to save exported ONNX model."),
-    format: str = typer.Option("onnx", "--format", "-f", help="Export format (default: onnx)."),
-    input_dim: int = typer.Option(1024, "--input-dim", help="Input feature size."),  # Adjust as needed
-    dropout: float = typer.Option(0.5, "--dropout", help="Dropout value to match training."),
+    format: str = typer.Option(
+        "onnx", "--format", "-f", help="Export format (default: onnx)."
+    ),
+    input_dim: int = typer.Option(
+        1024, "--input-dim", help="Input feature size."
+    ),  # Adjust as needed
+    dropout: float = typer.Option(
+        0.5, "--dropout", help="Dropout value to match training."
+    ),
 ) -> None:
     """
     Export a trained PyTorch model to ONNX format.
@@ -56,4 +64,3 @@ def export_model(
 
 if __name__ == "__main__":
     app()
-
