@@ -1,0 +1,5 @@
+fix:
+    uv run ruff format .
+check:
+    uv run ruff format . --check
+    uv run mypy .
