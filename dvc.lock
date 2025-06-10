@@ -357,3 +357,26 @@ stages:
       hash: md5
       md5: 4d86cd8e65758898762a8f7ee4c21910
       size: 79
+  export@0:
+    cmd: "uv run --package export -- python -m export.__main__ models/model_lower_body.pkl
+      exported_models/lower_body.onnx --format onnx --input-dim 512 --dropout 0.5\n"
+    deps:
+    - path: apps/export/src/export
+      hash: md5
+      md5: 9171fa6c1ac0161ec39264e974db115e.dir
+      size: 5456
+      nfiles: 5
+    - path: models/model_lower_body.pkl
+      hash: md5
+      md5: 7e86621a5ac934362c251016ecc86ff9
+      size: 4077
+    params:
+      params.yaml:
+        export.format: onnx
+        export.input_dim: 512
+        train.dropout: 0.5
+    outs:
+    - path: exported_models/lower_body.onnx
+      hash: md5
+      md5: 54ba49705135275aa461be025b36a3fe
+      size: 2357
