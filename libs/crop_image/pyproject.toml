@@ -9,9 +9,17 @@ authors = [
 requires-python = ">=3.13"
 dependencies = [
     "opencv-python>=4.11.0.86",
+    "typer>=0.16.0",
     "ultralytics>=8.3.150",
 ]
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.0",
+    "pytest-datadir>=1.7.2",
+    "ruff>=0.11.13",
+]

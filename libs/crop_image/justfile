@@ -3,3 +3,6 @@ fix:
 check:
     uv run ruff format . --check
     uv run mypy .
+
+test:
+    uv run pytest tests
