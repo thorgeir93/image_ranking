@@ -4,7 +4,6 @@ from typing import Callable
 from PIL import Image
 import structlog
 from ultralytics import YOLO
-from pydantic import BaseModel, field_validator
 
 from crop_image.constants import YOLO_MODEL, YOLO_MODEL_BASE_PATH
 from crop_image.models import ImageParts
@@ -19,7 +18,7 @@ logger = structlog.get_logger()
 
 def pipeline(
     image: Image.Image,
-    crop_model: YOLO,
+    yolo_model: str = YOLO_MODEL,
     crop_min_confidence: float = 0.5,
     crop_person_fn: Callable[
         [Image.Image, YOLO, float], list[Image.Image]
@@ -48,6 +47,8 @@ Args:
         list[ImageParts]: List of ImageParts containing upper and lower body images.
     """
     logger.debug("Starting pipeline", step="initial", image_info=str(image))
+
+    crop_model = YOLO(YOLO_MODEL_BASE_PATH / yolo_model)
 
     # Step 1: Crop all detected persons from the image
     cropped_images: list[Image.Image] = crop_person_fn(
@@ -110,8 +111,7 @@ def process_image_pipeline(
         List[str]: List of file paths to the saved processed images.
     """
     image = Image.open(image_path)
-    crop_model = YOLO(YOLO_MODEL_BASE_PATH / yolo_model)
-    processed_images = pipeline(image, crop_model, crop_min_confidence)
+    processed_images = pipeline(image, yolo_model, crop_min_confidence)
 
     saved_paths = []
     output_dir.mkdir(parents=True, exist_ok=True)
