@@ -10,17 +10,21 @@ import structlog
 log = structlog.get_logger(__name__)
 
 # Load Haar Cascade (legacy method)
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier(
+    cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+)
 
 repo_root = Path(__file__).resolve().parents[3]
-models_dir = repo_root / 'models'
+models_dir = repo_root / "models"
 
 # Load DNN face detector (modern method)
 dnn_model_path = {
-    'prototxt': models_dir / "deploy.prototxt.txt",
-    'weights': models_dir / "res10_300x300_ssd_iter_140000.caffemodel"
+    "prototxt": models_dir / "deploy.prototxt.txt",
+    "weights": models_dir / "res10_300x300_ssd_iter_140000.caffemodel",
 }
-dnn_net = cv2.dnn.readNetFromCaffe(dnn_model_path['prototxt'], dnn_model_path['weights'])
+dnn_net = cv2.dnn.readNetFromCaffe(
+    dnn_model_path["prototxt"], dnn_model_path["weights"]
+)
 
 face_detector = dlib.get_frontal_face_detector()
 
@@ -38,7 +42,7 @@ face_detector = dlib.get_frontal_face_detector()
 #     backend_id=cv2.dnn.DNN_BACKEND_DEFAULT,
 #     target_id=cv2.dnn.DNN_TARGET_CPU,
 # )
-# 
+#
 # def _has_face_yunet(img: np.ndarray) -> bool:
 #     h, w = img.shape[:2]
 #     face_detector.setInputSize((w, h))
@@ -51,6 +55,7 @@ def _has_face_haar(img: np.ndarray) -> bool:
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
     return len(faces) > 0
 
+
 def _has_face_dnn(img: np.ndarray, conf_threshold: float = 0.5) -> bool:
     h, w = img.shape[:2]
     blob = cv2.dnn.blobFromImage(img, 1.0, (300, 300), (104.0, 177.0, 123.0))
@@ -62,6 +67,7 @@ def _has_face_dnn(img: np.ndarray, conf_threshold: float = 0.5) -> bool:
         if confidence > conf_threshold:
             return True
     return False
+
 
 def _has_face_dlib(pil_image: Image.Image) -> bool:
     """
@@ -77,7 +83,10 @@ def _has_face_dlib(pil_image: Image.Image) -> bool:
     faces = face_detector(img)  # Detect faces
     return len(faces) > 0  # Return True if at least one face is detected
 
-def has_face(pil_image: Image.Image, method: Literal["haar", "dnn", "dlib"] = "dlib") -> bool:
+
+def has_face(
+    pil_image: Image.Image, method: Literal["haar", "dnn", "dlib"] = "dlib"
+) -> bool:
     """
     Determines if a PIL image contains at least one face.
 
@@ -101,6 +110,7 @@ def has_face(pil_image: Image.Image, method: Literal["haar", "dnn", "dlib"] = "d
         return _has_face_dlib(pil_image)
     else:
         raise ValueError("Invalid method. Choose 'haar', 'dnn', or 'dlib'.")
+
 
 @deprecated("Not used anymore, use has_face() instead.")
 def filter_images_with_faces(images: list) -> list:

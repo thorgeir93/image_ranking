@@ -3,9 +3,13 @@ from PIL import Image
 from datetime import datetime
 
 import structlog
+
 log = structlog.get_logger()
 
-def save_debug_image(image: Image.Image, debug_dir: Path = Path("debug_images")) -> Path:
+
+def save_debug_image(
+    image: Image.Image, debug_dir: Path = Path("debug_images")
+) -> Path:
     """
     Save an image to a centralized debug directory for troubleshooting.
 

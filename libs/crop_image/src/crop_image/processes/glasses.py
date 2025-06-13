@@ -12,9 +12,12 @@ from PIL import Image
 # -----------------------------------------
 
 # Load detector and predictor
-predictor_path: Path = get_model("shape_predictor_68_face_landmarks.dat")  # Adjust if needed
+predictor_path: Path = get_model(
+    "shape_predictor_68_face_landmarks.dat"
+)  # Adjust if needed
 face_detector = dlib.get_frontal_face_detector()
 landmark_predictor = dlib.shape_predictor(str(predictor_path))
+
 
 def has_glasses(pil_image: Image.Image) -> bool:
     """

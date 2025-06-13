@@ -8,6 +8,7 @@ from pathlib import Path
 
 app = typer.Typer()
 
+
 @app.command()
 def run_pipeline(
     image_path: str = typer.Argument(..., help="Path to the input image."),
@@ -18,7 +19,8 @@ def run_pipeline(
         0.5, help="Minimum confidence for cropping persons. Defaults to 0.5."
     ),
     output_dir: Path = typer.Option(
-        Path("."), help="Directory to save the processed images. Defaults to the current directory."
+        Path("."),
+        help="Directory to save the processed images. Defaults to the current directory.",
     ),
 ):
     """
@@ -30,7 +32,9 @@ def run_pipeline(
         crop_min_confidence (float): Minimum confidence for cropping persons.
         output_dir (str): Directory to save the processed images.
     """
-    saved_paths = process_image_pipeline(image_path, yolo_model, crop_min_confidence, output_dir)
+    saved_paths = process_image_pipeline(
+        image_path, yolo_model, crop_min_confidence, output_dir
+    )
     for path in saved_paths:
         typer.echo(f"Saved processed image: {path}")
 

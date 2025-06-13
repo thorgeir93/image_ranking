@@ -120,10 +120,11 @@ def split_upper_lower(images: list) -> tuple[list, list]:
 
     return upper_images, lower_images
 
+
 def get_model(model_name: str) -> Path:
     """Return the path to the given model name."""
     project_root_path = Path(__file__).resolve().parents[2]
-    models_dir = project_root_path / 'models'
+    models_dir = project_root_path / "models"
     model_path = models_dir / model_name
     if not model_path.exists():
         log.error("Model not found", model=str(model_path))

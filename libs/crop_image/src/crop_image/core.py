@@ -13,10 +13,11 @@ from crop_image.processes.blur import is_sharp
 from crop_image.processes.crop import crop_person
 from crop_image.processes.face import has_face
 from crop_image.processes.glasses import has_glasses
-from crop_image.processes.split import split_image  # Import the generic split_image method
+from crop_image.processes.split import (
+    split_image,
+)  # Import the generic split_image method
 
 logger = structlog.get_logger()
-
 
 
 def pipeline(
@@ -29,26 +30,28 @@ def pipeline(
     ] = crop_person,
     is_sharp_fn: Callable[[Image.Image], bool] = is_sharp,
     has_face_fn: Callable[[Image.Image], bool] = has_face,
-    split_image_fn: Callable[[Image.Image, float], tuple[Image.Image, Image.Image]] = split_image,
+    split_image_fn: Callable[
+        [Image.Image, float], tuple[Image.Image, Image.Image]
+    ] = split_image,
     split_ratio: float = 0.5,
 ) -> list[ImageParts]:
     """
-    Process an image through the pipeline:
-    1. Crop all detected persons from the image.
-    2. Filter only sharp images.
-    3. Accept only images that contain a face.
-    4. Split the image into two parts based on the split ratio.
+        Process an image through the pipeline:
+        1. Crop all detected persons from the image.
+        2. Filter only sharp images.
+        3. Accept only images that contain a face.
+        4. Split the image into two parts based on the split ratio.
 
-Args:
-        image (Image.Image): Input image as a PIL Image object.
-        crop_person_fn (Callable): Function to crop persons from the image.
-        is_sharp_fn (Callable): Function to check if an image is sharp.
-        has_face_fn (Callable): Function to check if an image contains a face.
-        split_image_fn (Callable): Function to split an image into two parts.
-        split_ratio (float): Ratio at which to split the image vertically.
+    Args:
+            image (Image.Image): Input image as a PIL Image object.
+            crop_person_fn (Callable): Function to crop persons from the image.
+            is_sharp_fn (Callable): Function to check if an image is sharp.
+            has_face_fn (Callable): Function to check if an image contains a face.
+            split_image_fn (Callable): Function to split an image into two parts.
+            split_ratio (float): Ratio at which to split the image vertically.
 
-    Returns:
-        list[ImageParts]: List of ImageParts containing upper and lower body images.
+        Returns:
+            list[ImageParts]: List of ImageParts containing upper and lower body images.
     """
     logger.debug("Starting pipeline", step="initial", image_info=str(image))
 
@@ -88,7 +91,9 @@ Args:
             logger.debug("Image split into two parts", step="split_image", index=idx)
             processed_images.append(ImageParts(upper_body=part1, lower_body=part2))
         except Exception as e:
-            logger.error("Failed to split image", step="split_image", index=idx, error=str(e))
+            logger.error(
+                "Failed to split image", step="split_image", index=idx, error=str(e)
+            )
             continue
 
     logger.debug(
@@ -127,12 +132,16 @@ def process_image_pipeline(
 
     for idx, image_parts in enumerate(processed_images):
         # Save the upper body image
-        upper_output_path = output_dir / f"{original_name}_processed_upper_{idx}{original_extension}"
+        upper_output_path = (
+            output_dir / f"{original_name}_processed_upper_{idx}{original_extension}"
+        )
         image_parts.upper_body.save(upper_output_path)
         saved_paths.append(str(upper_output_path))
 
         # Save the lower body image
-        lower_output_path = output_dir / f"{original_name}_processed_lower_{idx}{original_extension}"
+        lower_output_path = (
+            output_dir / f"{original_name}_processed_lower_{idx}{original_extension}"
+        )
         image_parts.lower_body.save(lower_output_path)
         saved_paths.append(str(lower_output_path))
 

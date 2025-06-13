@@ -1,12 +1,15 @@
 from PIL import Image
 
-def split_image(image: Image.Image, split_ratio: float = 0.5) -> tuple[Image.Image, Image.Image]:
+
+def split_image(
+    image: Image.Image, split_ratio: float = 0.5
+) -> tuple[Image.Image, Image.Image]:
     """
     Splits an image into two parts based on the specified split ratio.
 
     Args:
         image (Image.Image): Input image as a PIL Image object.
-        split_ratio (float): Ratio at which to split the image vertically. 
+        split_ratio (float): Ratio at which to split the image vertically.
                              Must be between 0 and 1. Default is 0.5 (equal halves).
 
     Returns:
