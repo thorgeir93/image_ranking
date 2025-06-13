@@ -7,8 +7,17 @@ authors = [
     { name = "Þorgeir Eyfjörð Sigurðsson", email = "thorgeirsigurd@gmail.com" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "crop-image==0.1.0",
+    "fastapi>=0.115.12",
+    "onnxruntime>=1.22.0",
+    "pillow>=11.2.1",
+    "uvicorn>=0.34.3",
+]
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.uv.sources]
+crop-image = { workspace = true }
