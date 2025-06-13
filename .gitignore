@@ -19,6 +19,9 @@ data/features/train
 data/features/evaluate
 models/*
 
+# Models
+*.pt
+
 # VScode
 .vscode
 /metrics_train_lower_body.json
