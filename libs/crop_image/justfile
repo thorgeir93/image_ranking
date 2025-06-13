@@ -6,3 +6,6 @@ check:
 
 test:
     uv run pytest tests
+
+run args:
+    uv run python -m src.crop_image.__main__ {{args}}

@@ -3,7 +3,7 @@ import typer
 from PIL import Image
 from ultralytics import YOLO
 from crop_image.constants import YOLO_MODEL, YOLO_MODEL_BASE_PATH
-from crop_image.pipeline import pipeline, process_image_pipeline
+from crop_image.core import pipeline, process_image_pipeline
 from pathlib import Path
 
 app = typer.Typer()

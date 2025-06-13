@@ -2,14 +2,17 @@ from calendar import c
 from pathlib import Path
 from typing import Callable
 from PIL import Image
+from cv2 import threshold
 import structlog
 from ultralytics import YOLO
 
 from crop_image.constants import YOLO_MODEL, YOLO_MODEL_BASE_PATH
+from crop_image.debug import save_debug_image
 from crop_image.models import ImageParts
 from crop_image.processes.blur import is_sharp
 from crop_image.processes.crop import crop_person
 from crop_image.processes.face import has_face
+from crop_image.processes.glasses import has_glasses
 from crop_image.processes.split import split_image  # Import the generic split_image method
 
 logger = structlog.get_logger()
@@ -19,7 +22,8 @@ logger = structlog.get_logger()
 def pipeline(
     image: Image.Image,
     yolo_model: str = YOLO_MODEL,
-    crop_min_confidence: float = 0.5,
+    person_crop_confidence: float = 0.5,
+    sharpness_threshold: float = 100.0,
     crop_person_fn: Callable[
         [Image.Image, YOLO, float], list[Image.Image]
     ] = crop_person,
@@ -52,7 +56,7 @@ Args:
 
     # Step 1: Crop all detected persons from the image
     cropped_images: list[Image.Image] = crop_person_fn(
-        image, crop_model, crop_min_confidence
+        image, crop_model, person_crop_confidence
     )
     if not cropped_images:
         logger.warning("No persons detected in the image", step="crop_person")
@@ -65,10 +69,11 @@ Args:
     processed_images: list[ImageParts] = []
 
     for idx, cropped_image in enumerate(cropped_images):
+        save_debug_image(cropped_image)
         logger.debug("Processing cropped image", step="process_cropped", index=idx)
 
         # Step 2: Filter only sharp images
-        if not is_sharp_fn(cropped_image):
+        if not is_sharp_fn(cropped_image, threshold=sharpness_threshold):
             logger.warning("Image is not sharp", step="is_sharp", index=idx)
             continue
 
@@ -77,7 +82,7 @@ Args:
             logger.warning("No face detected in the image", step="has_face", index=idx)
             continue
 
-        # Step 4: Split the image into two parts
+        # Step 4: Split the image into two parts, lower and upper body
         try:
             part1, part2 = split_image_fn(cropped_image, split_ratio)
             logger.debug("Image split into two parts", step="split_image", index=idx)
