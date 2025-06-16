@@ -19,7 +19,6 @@ log = structlog.get_logger(__name__)
 
 def process_image_pipeline(
     image_base64: str, person_crop_confidence: float = 0.5, sharpness_threshold: float = 100.0
-
 ) -> ImagePartRanking:
 
     # TODO: use version when possible
@@ -40,7 +39,7 @@ def process_image_pipeline(
         log.info("Model results", results=res)
         results.append(
             ImagePartRanking(
-                # image_base64=encode_image_to_base64(input_image),
+                image_base64=encode_image_to_base64(input_image),
                 lower_body={
                     "image_base64": encode_image_to_base64(image_parts.lower_body),
                     "ranking": res

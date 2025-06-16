@@ -19,6 +19,9 @@ generate-justfile project_path:
     echo "    uv run mypy ." >> {{project_path}}/justfile
 
 
+api:
+    (cd apps/api && uv run python -m src.api.run)
+
 app name:
     mkdir -p apps
     (cd apps && uv init --build-backend hatch --lib {{name}})

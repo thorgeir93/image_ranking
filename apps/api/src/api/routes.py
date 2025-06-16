@@ -5,7 +5,7 @@ from api.service import process_image_pipeline
 
 router = APIRouter()
 
-@router.post("/lower-body", response_model=APIResponse)
+@router.post("/running-style", response_model=APIResponse)
 def image_ranking(
     request: APIRequest,
     person_crop_confidence: float = Query(
