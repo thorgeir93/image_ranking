@@ -111,9 +111,9 @@ stages:
     deps:
     - path: apps/prepare/src/prepare
       hash: md5
-      md5: d1ec60019b41e4b8e5236048c0867867.dir
-      size: 50221
-      nfiles: 26
+      md5: c6bb5e2c7cee580e5f5203da0569b4c8.dir
+      size: 41613
+      nfiles: 23
     - path: data/raw/train/good
       hash: md5
       md5: 0d69d6b4a103cd688df2b9fe540399f5.dir
@@ -137,9 +137,9 @@ stages:
     deps:
     - path: apps/prepare/src/prepare
       hash: md5
-      md5: d1ec60019b41e4b8e5236048c0867867.dir
-      size: 50221
-      nfiles: 26
+      md5: c6bb5e2c7cee580e5f5203da0569b4c8.dir
+      size: 41613
+      nfiles: 23
     - path: data/raw/train/bad
       hash: md5
       md5: 76063d2fdf13153116b668056b74da79.dir
@@ -277,11 +277,11 @@ stages:
     outs:
     - path: metrics_train_lower_body.json
       hash: md5
-      md5: f840571765553a9bbc3c16595f28dc8c
+      md5: 029daaffefd4303efe39ace85994e795
       size: 105
     - path: models/model_lower_body.pkl
       hash: md5
-      md5: 7e86621a5ac934362c251016ecc86ff9
+      md5: 1a1d6ab591eae7eaf8ed79a1e48fbb83
       size: 4077
   prepare@2:
     cmd: "uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/evaluate/good
@@ -290,9 +290,9 @@ stages:
     deps:
     - path: apps/prepare/src/prepare
       hash: md5
-      md5: d1ec60019b41e4b8e5236048c0867867.dir
-      size: 50221
-      nfiles: 26
+      md5: c6bb5e2c7cee580e5f5203da0569b4c8.dir
+      size: 41613
+      nfiles: 23
     - path: data/raw/evaluate/good
       hash: md5
       md5: d5477667ac868886044d242cb591061f.dir
@@ -316,9 +316,9 @@ stages:
     deps:
     - path: apps/prepare/src/prepare
       hash: md5
-      md5: d1ec60019b41e4b8e5236048c0867867.dir
-      size: 50221
-      nfiles: 26
+      md5: c6bb5e2c7cee580e5f5203da0569b4c8.dir
+      size: 41613
+      nfiles: 23
     - path: data/raw/evaluate/bad
       hash: md5
       md5: edd4b326ba0cae331f51fb190aaf504b.dir
@@ -350,7 +350,7 @@ stages:
       size: 6210
     - path: models/model_lower_body.pkl
       hash: md5
-      md5: 7e86621a5ac934362c251016ecc86ff9
+      md5: 1a1d6ab591eae7eaf8ed79a1e48fbb83
       size: 4077
     outs:
     - path: metrics_eval_lower_body.json
@@ -368,7 +368,7 @@ stages:
       nfiles: 5
     - path: models/model_lower_body.pkl
       hash: md5
-      md5: 7e86621a5ac934362c251016ecc86ff9
+      md5: 1a1d6ab591eae7eaf8ed79a1e48fbb83
       size: 4077
     params:
       params.yaml:
@@ -378,5 +378,5 @@ stages:
     outs:
     - path: exported_models/lower_body.onnx
       hash: md5
-      md5: 54ba49705135275aa461be025b36a3fe
+      md5: 4bebb84cd7505da6e18630167d05e18e
       size: 2357
