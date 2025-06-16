@@ -252,14 +252,14 @@ stages:
       nfiles: 4
     - path: data/prepared/evaluate/lower_body
       hash: md5
-      md5: 2a4d78fa3ced283ef5416561e2bf2024.dir
-      size: 194658
-      nfiles: 2
+      md5: 0ca8daa983a5a93a8956b9ec946ae9c5.dir
+      size: 3592606
+      nfiles: 25
     outs:
     - path: data/features/evaluate/lower_body.parquet
       hash: md5
-      md5: 9f54185f82d94ad1dc6c57a8ae1c90d7
-      size: 6210
+      md5: 0a546c50c70666f58638dc3336b6193f
+      size: 55276
   train@0:
     cmd: "uv run --package train -- python -m train.train data/features/train/lower_body.parquet
       --epochs 10 --batch-size 32 --lr 0.001 --dropout 0.5 --output-model models/model_lower_body.pkl
@@ -295,20 +295,20 @@ stages:
       nfiles: 23
     - path: data/raw/evaluate/good
       hash: md5
-      md5: d5477667ac868886044d242cb591061f.dir
-      size: 1055344
-      nfiles: 1
+      md5: b86fc3e334537e4aa548b45a17e8fac5.dir
+      size: 6423165
+      nfiles: 15
     outs:
     - path: data/prepared/evaluate/lower_body/good
       hash: md5
-      md5: 60c7f0636fd3e25c4d3c45226c07c79c.dir
-      size: 176380
-      nfiles: 1
+      md5: a0fe8e0a5f2574df42ec7a94ddb76c21.dir
+      size: 2259077
+      nfiles: 15
     - path: data/prepared/evaluate/upper_body/good
       hash: md5
-      md5: 32035da638e381085fde949eadafc861.dir
-      size: 126471
-      nfiles: 1
+      md5: 2158d5fe65820c3664550f6c3c02cae9.dir
+      size: 1968772
+      nfiles: 15
   prepare@3:
     cmd: "uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/evaluate/bad
       data/prepared/evaluate/upper_body/bad data/prepared/evaluate/lower_body/bad
@@ -321,20 +321,20 @@ stages:
       nfiles: 23
     - path: data/raw/evaluate/bad
       hash: md5
-      md5: edd4b326ba0cae331f51fb190aaf504b.dir
-      size: 1330389
-      nfiles: 1
+      md5: eaa75fb188020e78a693db20a08d437a.dir
+      size: 6343132
+      nfiles: 14
     outs:
     - path: data/prepared/evaluate/lower_body/bad
       hash: md5
-      md5: 0586018e6cdff5a0653c0ebfed64dee4.dir
-      size: 18278
-      nfiles: 1
+      md5: 608c1ae687c39302c2b59527663b21b4.dir
+      size: 1333529
+      nfiles: 10
     - path: data/prepared/evaluate/upper_body/bad
       hash: md5
-      md5: 138ba6a408ffb59630939fd35498d73e.dir
-      size: 16272
-      nfiles: 1
+      md5: c95a186511dd9b03bd03cce58fd99814.dir
+      size: 1094753
+      nfiles: 10
   evaluate@0:
     cmd: "uv run --package evaluate -- python -m evaluate.__main__ data/features/evaluate/lower_body.parquet
       --model models/model_lower_body.pkl --metric metrics_eval_lower_body.json\n"
@@ -346,8 +346,8 @@ stages:
       nfiles: 5
     - path: data/features/evaluate/lower_body.parquet
       hash: md5
-      md5: 9f54185f82d94ad1dc6c57a8ae1c90d7
-      size: 6210
+      md5: 0a546c50c70666f58638dc3336b6193f
+      size: 55276
     - path: models/model_lower_body.pkl
       hash: md5
       md5: 1a1d6ab591eae7eaf8ed79a1e48fbb83
@@ -355,8 +355,8 @@ stages:
     outs:
     - path: metrics_eval_lower_body.json
       hash: md5
-      md5: 4d86cd8e65758898762a8f7ee4c21910
-      size: 79
+      md5: 6ce9b304387a6dee9f7dc715e396e102
+      size: 125
   export@0:
     cmd: "uv run --package export -- python -m export.__main__ models/model_lower_body.pkl
       exported_models/lower_body.onnx --format onnx --input-dim 512 --dropout 0.5\n"
