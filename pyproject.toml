@@ -1,5 +1,5 @@
 [project]
-name = "running-style-training"
+name = "image-ranking"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
