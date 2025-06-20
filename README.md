@@ -59,3 +59,6 @@ git add dvc.lock
 git commit -m "Add new image to data/raw"
 uv run dvc push
 ```
+
+# TODO
+- [ ] Collect images into a dataset where people have hands above their head. If they do, the image should get extra points.
