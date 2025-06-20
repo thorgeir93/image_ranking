@@ -8,7 +8,7 @@ This project uses training data where a running person have been cropped out of 
 The output model should be able to determine from running legs whether it is a good style or a bad style, scoring from 0.0 to 1.0.
 
 ## Version control
-This project uses `dvc` to version control the dataset, models, parameters and the code.
+This project uses `dvc` to version control the dataset, models, parameters and the code. Meaning we can reproduce any stage of the model if needed.
 
 ## Visulize the DVC workflow
 
