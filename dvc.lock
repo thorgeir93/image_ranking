@@ -111,8 +111,8 @@ stages:
     deps:
     - path: apps/prepare/src/prepare
       hash: md5
-      md5: c6bb5e2c7cee580e5f5203da0569b4c8.dir
-      size: 41613
+      md5: be4223743ed9dcc243d31fb48b5c80df.dir
+      size: 41523
       nfiles: 23
     - path: data/raw/train/good
       hash: md5
@@ -137,44 +137,44 @@ stages:
     deps:
     - path: apps/prepare/src/prepare
       hash: md5
-      md5: c6bb5e2c7cee580e5f5203da0569b4c8.dir
-      size: 41613
+      md5: be4223743ed9dcc243d31fb48b5c80df.dir
+      size: 41523
       nfiles: 23
     - path: data/raw/train/bad
       hash: md5
-      md5: 76063d2fdf13153116b668056b74da79.dir
-      size: 64245017
-      nfiles: 263
+      md5: a0b84657f177ee699a5635619b5ca9a4.dir
+      size: 108622374
+      nfiles: 347
     outs:
     - path: data/prepared/train/lower_body/bad
       hash: md5
-      md5: 089fc130e8619af0f2469eaf0e9ff1ab.dir
-      size: 17480053
-      nfiles: 213
+      md5: cfba0699232d2c4e884f4e54b07c9860.dir
+      size: 27314495
+      nfiles: 280
     - path: data/prepared/train/upper_body/bad
       hash: md5
-      md5: 336ee1924331b9b4bc0856585150abe5.dir
-      size: 20598612
-      nfiles: 213
+      md5: f4a6b6ed262acb0367fc9bd3f77df854.dir
+      size: 28181692
+      nfiles: 280
   featurize@0:
     cmd: "uv run --package featurize -- python -m featurize.__main__ data/prepared/train/lower_body
       data/features/train/lower_body.parquet --batch-size 32\n"
     deps:
     - path: apps/featurize/src/featurize
       hash: md5
-      md5: 495b55bf3fdf7dc1136454a8af7d3293.dir
-      size: 7218
+      md5: bc9c7f63bbdfe232bca3ff7e4f7501b9.dir
+      size: 7200
       nfiles: 4
     - path: data/prepared/train/lower_body
       hash: md5
-      md5: a143578301f41e510831de112e759331.dir
-      size: 40326038
-      nfiles: 465
+      md5: 2482834a6fac137a798c28f5113b5dda.dir
+      size: 50160480
+      nfiles: 532
     outs:
     - path: data/features/train/lower_body.parquet
       hash: md5
-      md5: 7777f81160da9eba8b0b9b8231bd99b7
-      size: 1029827
+      md5: 77e085b059c7796029ccc67dda3c241b
+      size: 1176371
   prepare@bad:
     cmd: uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/bad
       data/prepared/upper_body/bad data/prepared/lower_body/bad --min-confidence 0.8
@@ -247,8 +247,8 @@ stages:
     deps:
     - path: apps/featurize/src/featurize
       hash: md5
-      md5: 495b55bf3fdf7dc1136454a8af7d3293.dir
-      size: 7218
+      md5: bc9c7f63bbdfe232bca3ff7e4f7501b9.dir
+      size: 7200
       nfiles: 4
     - path: data/prepared/evaluate/lower_body
       hash: md5
@@ -267,21 +267,21 @@ stages:
     deps:
     - path: apps/train/src/train
       hash: md5
-      md5: 0011aff72f513631546a1fbef3546219.dir
-      size: 10899
+      md5: ad52985d95ab8f86c55dd5774b3b969c.dir
+      size: 10881
       nfiles: 5
     - path: data/features/train/lower_body.parquet
       hash: md5
-      md5: 7777f81160da9eba8b0b9b8231bd99b7
-      size: 1029827
+      md5: 77e085b059c7796029ccc67dda3c241b
+      size: 1176371
     outs:
     - path: metrics_train_lower_body.json
       hash: md5
-      md5: 029daaffefd4303efe39ace85994e795
-      size: 105
+      md5: bd1f9ce6e4c677b29e8819639d78efb6
+      size: 106
     - path: models/model_lower_body.pkl
       hash: md5
-      md5: 1a1d6ab591eae7eaf8ed79a1e48fbb83
+      md5: 411d0140731b0646c68d971b240d9e00
       size: 4077
   prepare@2:
     cmd: "uv run --package prepare -- python -m prepare.__main__ run-workflow data/raw/evaluate/good
@@ -290,8 +290,8 @@ stages:
     deps:
     - path: apps/prepare/src/prepare
       hash: md5
-      md5: c6bb5e2c7cee580e5f5203da0569b4c8.dir
-      size: 41613
+      md5: be4223743ed9dcc243d31fb48b5c80df.dir
+      size: 41523
       nfiles: 23
     - path: data/raw/evaluate/good
       hash: md5
@@ -316,8 +316,8 @@ stages:
     deps:
     - path: apps/prepare/src/prepare
       hash: md5
-      md5: c6bb5e2c7cee580e5f5203da0569b4c8.dir
-      size: 41613
+      md5: be4223743ed9dcc243d31fb48b5c80df.dir
+      size: 41523
       nfiles: 23
     - path: data/raw/evaluate/bad
       hash: md5
@@ -341,8 +341,8 @@ stages:
     deps:
     - path: apps/evaluate/src/evaluate
       hash: md5
-      md5: 26f577219b57455f2a019b4093ff22f0.dir
-      size: 9469
+      md5: d4f39c3b10f452df7797931d6e92d12a.dir
+      size: 9451
       nfiles: 5
     - path: data/features/evaluate/lower_body.parquet
       hash: md5
@@ -350,25 +350,25 @@ stages:
       size: 55276
     - path: models/model_lower_body.pkl
       hash: md5
-      md5: 1a1d6ab591eae7eaf8ed79a1e48fbb83
+      md5: 411d0140731b0646c68d971b240d9e00
       size: 4077
     outs:
     - path: metrics_eval_lower_body.json
       hash: md5
-      md5: 6ce9b304387a6dee9f7dc715e396e102
-      size: 125
+      md5: 9a81cde40b1874139457689199b960c8
+      size: 98
   export@0:
     cmd: "uv run --package export -- python -m export.__main__ models/model_lower_body.pkl
       exported_models/lower_body.onnx --format onnx --input-dim 512 --dropout 0.5\n"
     deps:
     - path: apps/export/src/export
       hash: md5
-      md5: 59551721b4007df8f6a9b4c9d86c8570.dir
-      size: 5531
+      md5: 4f1a450c3a251efaf41ca5936067ade8.dir
+      size: 5513
       nfiles: 5
     - path: models/model_lower_body.pkl
       hash: md5
-      md5: 1a1d6ab591eae7eaf8ed79a1e48fbb83
+      md5: 411d0140731b0646c68d971b240d9e00
       size: 4077
     params:
       params.yaml:
@@ -378,5 +378,5 @@ stages:
     outs:
     - path: exported_models/lower_body.onnx
       hash: md5
-      md5: 4bebb84cd7505da6e18630167d05e18e
+      md5: 39585563e939ee13d44388fb705d2bbf
       size: 2357
