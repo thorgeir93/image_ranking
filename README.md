@@ -81,14 +81,8 @@ Refer to the `justfile` for various development commands. To install dependencie
 just setup
 ```
 
-For testing, use:
+For formatting, use:
 ```
-just test
-```
-
-For linting and formatting, use:
-```
-just lint
 just fix
 ```
 
