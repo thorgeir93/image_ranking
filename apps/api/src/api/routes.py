@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Query
-from api.models import APIRequest, APIResponse
+from api.models import APIRequest, APIResponse, ImagePartRanking
 from api.utils import decode_base64_image
 from api.service import process_image_pipeline
 
@@ -26,7 +26,7 @@ def image_ranking(
         ),
     ),
 ) -> APIResponse:
-    results = process_image_pipeline(
+    results: list[ImagePartRanking] = process_image_pipeline(
         image_base64=request.image_base64,
         person_crop_confidence=person_crop_confidence,
         sharpness_threshold=sharpness_threshold,

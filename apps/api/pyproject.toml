@@ -15,6 +15,10 @@ dependencies = [
     "uvicorn>=0.34.3",
 ]
 
+[[tool.mypy.overrides]]
+module = ["ultralytics.*", "torchvision.*", "onnxruntime.*"]
+ignore_missing_imports = true
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

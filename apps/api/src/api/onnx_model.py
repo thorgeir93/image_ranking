@@ -23,7 +23,7 @@ def get_model_path(model_name: str) -> Path:
 
 
 class ONNXClassifier:
-    def __init__(self, model_path: str):
+    def __init__(self, model_path: Path):
         self.session = ort.InferenceSession(model_path)
         self.input_name = self.session.get_inputs()[0].name
         self.feature_extractor = resnet18(pretrained=True)
