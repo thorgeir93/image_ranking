@@ -1,46 +1,47 @@
 # Running style training model
 
 ## Background
-This project was created to make photography post-processing faster and easier. Editing photos manually takes a lot of time and effort. By training a model to score images based on running style, we can speed up this process.
+Manually editing photos is time-consuming and labor-intensive. By training a model to score images based on running style, this project aims to streamline the post-processing workflow for photography.
 
 ## About
-This project uses training data where a running person have been cropped out of image and split into lower and upper body (prepare stage).
-The output model should be able to determine from running legs whether it is a good style or a bad style, scoring from 0.0 to 1.0.
+This project uses training data where images of running individuals are cropped and split into lower and upper body segments during the preparation stage. The model predicts running style based on leg movements, scoring the style on a scale from 0.0 (poor) to 1.0 (excellent).
 
-## Version control
-This project uses `dvc` to version control the dataset, models, parameters and the code. Meaning we can reproduce any stage of the model if needed.
+## Version Control
+This project uses `dvc` to version control the dataset, models, parameters, and code. This ensures that any stage of the model can be reproduced if needed.
 
-## Visulize the DVC workflow
+## Visualize the DVC Workflow
+
+The system is divided into two pipelines: the training pipeline and the evaluation pipeline. The evaluation pipeline depends on the training pipeline. The reason for having two separate pipelines is that they use different raw data for processing. The `export` stage is where the training model is exported into portable model such as `.onnx` format.
 
 ```
-$ uv run dvc dag
-                                                           +--------------------+         
-                                                           | data/raw/train.dvc |         
-                                                           +--------------------+         
-                                                               ***         ***            
-                                                              *               *           
-                                                            **                 **         
-      +-----------------------+                     +-----------+           +-----------+ 
-      | data/raw/evaluate.dvc |                     | prepare@0 |           | prepare@1 | 
-      +-----------------------+                     +-----------+           +-----------+ 
-           ***         ***                                     ***         ***            
-          *               *                                       *       *               
-        **                 **                                      **   **                
-+-----------+           +-----------+                         +-------------+             
-| prepare@2 |           | prepare@3 |                         | featurize@0 |             
-+-----------+           +-----------+                         +-------------+             
-           ***         ***                                            *                   
-              *       *                                               *                   
-               **   **                                                *                   
-           +-------------+                                      +---------+               
-           | featurize@1 |                                   ***| train@0 |               
-           +-------------+                         **********   +---------+               
-                  *                      **********                   *                   
-                  *            **********                             *                   
-                  *       *****                                       *                   
-            +------------+                                      +----------+              
-            | evaluate@0 |                                      | export@0 |              
-            +------------+                                      +----------+              
+$ uv run dvc dag --mermaid
+```
+
+```mermaid
+flowchart TD
+        node1["data/raw/evaluate.dvc"]
+        node2["data/raw/train.dvc"]
+        node3["evaluate@0"]
+        node4["export@0"]
+        node5["featurize@0"]
+        node6["featurize@1"]
+        node7["prepare@0"]
+        node8["prepare@1"]
+        node9["prepare@2"]
+        node10["prepare@3"]
+        node11["train@0"]
+        node1-->node9
+        node1-->node10
+        node2-->node7
+        node2-->node8
+        node5-->node11
+        node6-->node3
+        node7-->node5
+        node8-->node5
+        node9-->node6
+        node10-->node6
+        node11-->node3
+        node11-->node4
 ```
 
 ## Managing data/*
@@ -49,7 +50,7 @@ $ uv run dvc dag
 
 ```
 # Adding the new image
-cp my_new_image.jpg data/raw/lower_body/bad/
+cp my_new_image.jpg data/raw/train/lower_body/bad/
 
 # Re-run pipeline to generate dvc.lock (see changes)
 uv run dvc repro
