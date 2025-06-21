@@ -1,11 +1,14 @@
 run:
+    # Run the hole training process.
     uv run dvc repro
 
 prepare:
+    # Run only the prepare stage.
     uv run dvc repro prepare
-    # uv run dvc repro prepare-lower-body-good
 
 init-dvc-localremote:
+    # Initialize a local DVC remote for storing data.
+    # Only run this once per project.
     mkdir -p ~/dvc-remote
     uv run dvc remote add -d localremote ~/dvc-remote
 
@@ -32,6 +35,9 @@ lib name:
     mkdir -p libs
     (cd libs && uv init --build-backend hatch --lib {{name}})
     just generate-justfile libs/{{name}}
+
+setup:
+    uv sync --all-packages
 
 fix:
     uv run ruff format .

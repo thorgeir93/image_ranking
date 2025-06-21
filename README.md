@@ -1,4 +1,4 @@
-# Running style training model
+# Image ranking model training 
 
 ## Background
 Manually editing photos is time-consuming and labor-intensive. By training a model to score images based on running style, this project aims to streamline the post-processing workflow for photography.
@@ -61,5 +61,37 @@ git commit -m "Add new image to data/raw"
 uv run dvc push
 ```
 
+## API Documentation
+
+The project includes an API for ranking images based on running style. The API is built using FastAPI and provides endpoints for processing images and retrieving rankings.
+
+### Running the API Locally
+To start the API server, run:
+```
+cd apps/api && uv run python -m src.api.run
+```
+See the API documentation here: `http://localhost:8000/docs`.
+
+**Note:** Ensure that you have run the training pipeline with relevant training data before starting the API. The model required for ranking images is still under development and may not be available at this moment.
+
+## Development
+
+Refer to the `justfile` for various development commands. To install dependencies and set up the environment, run:
+```
+just setup
+```
+
+For testing, use:
+```
+just test
+```
+
+For linting and formatting, use:
+```
+just lint
+just fix
+```
+
 # TODO
 - [ ] Collect images into a dataset where people have hands above their head. If they do, the image should get extra points.
+- [ ] Create API endpoint that accept a image (base64) and extracts the lower body of the pseron from the image if exists and return the represented base64 string.

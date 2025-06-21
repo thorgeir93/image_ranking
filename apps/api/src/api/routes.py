@@ -5,6 +5,8 @@ from api.service import process_image_pipeline
 
 router = APIRouter()
 
+# TODO: create endpoint to preprocess a image.
+
 @router.post("/running-style", response_model=APIResponse)
 def image_ranking(
     request: APIRequest,
