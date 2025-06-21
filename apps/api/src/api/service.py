@@ -18,13 +18,18 @@ log = structlog.get_logger(__name__)
 
 
 def process_image_pipeline(
-    image_base64: str, person_crop_confidence: float = 0.5, sharpness_threshold: float = 100.0
+    image_base64: str,
+    person_crop_confidence: float = 0.5,
+    sharpness_threshold: float = 100.0,
 ) -> ImagePartRanking:
-
     # TODO: use version when possible
     input_image: Image.Image = decode_base64_image(image_base64)
 
-    images_cropped: list[ImageParts] = pipeline(image=input_image, person_crop_confidence=person_crop_confidence, sharpness_threshold=sharpness_threshold)
+    images_cropped: list[ImageParts] = pipeline(
+        image=input_image,
+        person_crop_confidence=person_crop_confidence,
+        sharpness_threshold=sharpness_threshold,
+    )
 
     model_path: Path = get_model_path("lower_body.onnx")
     onnx_model = ONNXClassifier(model_path=model_path)
@@ -42,9 +47,9 @@ def process_image_pipeline(
                 image_base64=encode_image_to_base64(input_image),
                 lower_body={
                     "image_base64": encode_image_to_base64(image_parts.lower_body),
-                    "ranking": res
-                }
-            ) 
+                    "ranking": res,
+                },
+            )
         )
-    
+
     return results

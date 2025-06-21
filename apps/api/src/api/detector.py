@@ -4,6 +4,7 @@ from PIL import Image
 
 _detector_cache: dict[str, YOLO] = {}
 
+
 def load_detector(model_name: str, version: str) -> YOLO:
     # TODO: use version if possible
     global _detector_cache
@@ -14,7 +15,10 @@ def load_detector(model_name: str, version: str) -> YOLO:
         _detector_cache[key] = YOLO(model_path)
     return _detector_cache[key]
 
-def run_detection(detector: YOLO, image: Image.Image) -> list[tuple[list[float], float]]:
+
+def run_detection(
+    detector: YOLO, image: Image.Image
+) -> list[tuple[list[float], float]]:
     # Convert to np.array
     img_np = np.array(image)
 

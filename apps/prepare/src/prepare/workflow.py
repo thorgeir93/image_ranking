@@ -1,7 +1,10 @@
 from pathlib import Path
 import shutil
 from ultralytics import YOLO
-from crop_image.processes.crop import get_cropped_persons_from_directory, load_yolo_model
+from crop_image.processes.crop import (
+    get_cropped_persons_from_directory,
+    load_yolo_model,
+)
 from crop_image.processes.face import filter_images_with_faces
 from crop_image.processes.blur import filter_sharp_images_from_images
 from crop_image.utils import split_upper_lower
