@@ -22,7 +22,7 @@ def run_workflow(
     source_dir: Path,
     output_upper_body_dir: Path,
     output_lower_body_dir: Path,
-    model_path: str,
+    model_path: Path,
     min_confidence: float,
     blur_threshold: float,
     clean: bool,

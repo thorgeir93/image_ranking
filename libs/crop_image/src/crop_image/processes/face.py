@@ -2,6 +2,7 @@ from pathlib import Path
 from warnings import deprecated
 from PIL import Image
 import cv2
+from cv2 import data as cv2_data
 import dlib
 import numpy as np
 from typing import Literal
@@ -11,7 +12,7 @@ log = structlog.get_logger(__name__)
 
 # Load Haar Cascade (legacy method)
 face_cascade = cv2.CascadeClassifier(
-    cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+    cv2_data.haarcascades + "haarcascade_frontalface_default.xml"
 )
 
 repo_root = Path(__file__).resolve().parents[3]
@@ -23,7 +24,7 @@ dnn_model_path = {
     "weights": models_dir / "res10_300x300_ssd_iter_140000.caffemodel",
 }
 dnn_net = cv2.dnn.readNetFromCaffe(
-    dnn_model_path["prototxt"], dnn_model_path["weights"]
+    str(dnn_model_path["prototxt"]), str(dnn_model_path["weights"])
 )
 
 face_detector = dlib.get_frontal_face_detector()

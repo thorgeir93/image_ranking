@@ -13,3 +13,7 @@ members = [
     "apps/*",
     "libs/*"
 ]
+
+[[tool.mypy.overrides]]
+module = ["ultralytics.*", "torchvision.*", "onnxruntime.*", "dlib.*"]
+ignore_missing_imports = true

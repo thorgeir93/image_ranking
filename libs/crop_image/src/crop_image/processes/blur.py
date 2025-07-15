@@ -1,4 +1,4 @@
-from typing import Any, List, Tuple
+from typing import Any
 from pathlib import Path
 import cv2
 import numpy as np
@@ -46,16 +46,18 @@ def is_sharp(pil_image: Image.Image, threshold: float = 100.0) -> bool:
 
 
 def filter_sharp_images_from_images(
-    images: List[Tuple[Path, np.ndarray, Any]], blur_threshold: float
-) -> List[Tuple[Path, np.ndarray, float, bool]]:
+    images: list[tuple[Path, np.ndarray, Any]], blur_threshold: float
+) -> list[tuple[Path, np.ndarray, float, bool]]:
     """
     Given: list of (image_path, img, _)
     Returns: list of (image_path, img, blur_score, is_blurred)
     """
-    sharp_images = []
+    sharp_images: list[tuple[Path, np.ndarray, float, bool]] = []
 
     # TODO: consider to move the blur functionality to here instead of in crop
     #       then we can skip _,_,_.
+    score: float
+    blurred: bool
     for image_path, img, _ in images:
         score = blur_score(img)
         blurred = is_blurred(img, threshold=blur_threshold)
