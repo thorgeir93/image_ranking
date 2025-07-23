@@ -17,6 +17,7 @@ members = [
     "export",
     "featurize",
     "image-ranking",
+    "image-ranking-model",
     "prepare",
     "train",
 ]
@@ -919,6 +920,34 @@ wheels = [
 ]
 
 [[package]]
+name = "httpcore"
+version = "1.0.9"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "certifi" },
+    { name = "h11" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/06/94/82699a10bca87a5556c9c59b5963f2d039dbd239f25bc2a63907a05a14cb/httpcore-1.0.9.tar.gz", hash = "sha256:6e34463af53fd2ab5d807f399a9b45ea31c3dfa2276f15a2c3f00afff6e176e8", size = 85484 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7e/f5/f66802a942d491edb555dd61e3a9961140fd64c90bce1eafd741609d334d/httpcore-1.0.9-py3-none-any.whl", hash = "sha256:2d400746a40668fc9dec9810239072b40b4484b640a8c38fd654a024c7a1bf55", size = 78784 },
+]
+
+[[package]]
+name = "httpx"
+version = "0.28.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "anyio" },
+    { name = "certifi" },
+    { name = "httpcore" },
+    { name = "idna" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b1/df/48c586a5fe32a0f01324ee087459e112ebb7224f646c0b5023f5e79e9956/httpx-0.28.1.tar.gz", hash = "sha256:75e98c5f16b0f35b567856f597f06ff2270a374470a5c2392242528e3e3e42fc", size = 141406 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2a/39/e50c7c3a983047577ee07d2a9e53faf5a69493943ec3f6a384bdc792deb2/httpx-0.28.1-py3-none-any.whl", hash = "sha256:d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad", size = 73517 },
+]
+
+[[package]]
 name = "humanfriendly"
 version = "10.0"
 source = { registry = "https://pypi.org/simple" }
@@ -963,6 +992,23 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [{ name = "dvc", specifier = ">=3.59.2" }]
+
+[[package]]
+name = "image-ranking-model"
+version = "0.1.0"
+source = { editable = "apps/image_ranking_model" }
+dependencies = [
+    { name = "httpx" },
+    { name = "rawpy" },
+    { name = "tenacity" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "httpx", specifier = ">=0.28.1" },
+    { name = "rawpy", specifier = ">=0.25.0" },
+    { name = "tenacity", specifier = ">=9.1.2" },
+]
 
 [[package]]
 name = "iniconfig"
@@ -1912,6 +1958,21 @@ wheels = [
 ]
 
 [[package]]
+name = "rawpy"
+version = "0.25.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2a/03/9191587911b3526b8ae5ed182e641d7a812060a8eae78c984562bdb5d61f/rawpy-0.25.0-cp313-cp313-macosx_10_9_x86_64.whl", hash = "sha256:d95163f5ad28faa5fd176f3fe9154f1bc14097ed7e07f2092dddfab68c3bfd8d", size = 1110752 },
+    { url = "https://files.pythonhosted.org/packages/50/a7/cf06440823f994c5da963dbe0b3adb2a7f3d28709ad3fe6dac58a124317b/rawpy-0.25.0-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:5ac7d9ac0a84b8e957bb9df47184f615719aab1dbd9ae46efe6caf7f3eb0cbc2", size = 1010758 },
+    { url = "https://files.pythonhosted.org/packages/9c/a8/f2263e6135a9971e1636223ff231a8595f2d8c3efb9b326911c36d6597cc/rawpy-0.25.0-cp313-cp313-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:3e3cd4e5f23ccd60ddf0a2ce807d0a898b5143799829ce68aa33289ac2319c1e", size = 1919409 },
+    { url = "https://files.pythonhosted.org/packages/c3/10/c6131a6f4871c40037d1919d2b2f63878f6c2e9f9ceeb2a66d0d2a059a0d/rawpy-0.25.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:aab8834a03fbd1645d46431b714c09617b257840b632fef59aba4b94010ff8b1", size = 1940250 },
+    { url = "https://files.pythonhosted.org/packages/cf/d3/5904eff78c5d5abd27e3b1ee525b2951ec207d31e77c9dabf11debe139d3/rawpy-0.25.0-cp313-cp313-win_amd64.whl", hash = "sha256:68cc8e550982621e692e033060f9505d6fa371eae539e148879d7b8006b11c43", size = 845118 },
+]
+
+[[package]]
 name = "requests"
 version = "2.32.3"
 source = { registry = "https://pypi.org/simple" }
@@ -2192,6 +2253,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/ec/fe/802052aecb21e3797b8f7902564ab6ea0d60ff8ca23952079064155d1ae1/tabulate-0.9.0.tar.gz", hash = "sha256:0095b12bf5966de529c0feb1fa08671671b3368eec77d7ef7ab114be2c068b3c", size = 81090 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/40/44/4a5f08c96eb108af5cb50b41f76142f0afa346dfa99d5296fe7202a11854/tabulate-0.9.0-py3-none-any.whl", hash = "sha256:024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f", size = 35252 },
+]
+
+[[package]]
+name = "tenacity"
+version = "9.1.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/0a/d4/2b0cd0fe285e14b36db076e78c93766ff1d529d70408bd1d2a5a84f1d929/tenacity-9.1.2.tar.gz", hash = "sha256:1169d376c297e7de388d18b4481760d478b0e99a777cad3a9c86e556f4b697cb", size = 48036 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e5/30/643397144bfbfec6f6ef821f36f33e57d35946c44a2352d3c9f0ae847619/tenacity-9.1.2-py3-none-any.whl", hash = "sha256:f77bf36710d8b73a50b2dd155c97b870017ad21afe6ab300326b0371b3b05138", size = 28248 },
 ]
 
 [[package]]
