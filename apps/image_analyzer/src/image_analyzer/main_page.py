@@ -1,7 +1,7 @@
 
 from io import BytesIO
 from PIL import Image
-from frontend.api import get_image_ranking
+from image_analyzer.api import get_image_ranking
 import streamlit as st
 from base64 import b64decode, b64encode
 
