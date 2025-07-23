@@ -5,4 +5,4 @@ check:
     uv run mypy .
 
 run *args:
-    uv run python -m streamlit run src/frontend/streamlit_app.py {{args}}
+    uv run python -m streamlit run src/image_analyzer/streamlit_app.py {{args}}
