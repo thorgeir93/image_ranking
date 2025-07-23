@@ -7,7 +7,11 @@ authors = [
     { name = "Þorgeir Eyfjörð Sigurðsson", email = "thorgeirsigurd@gmail.com" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "httpx>=0.28.1",
+    "rawpy>=0.25.0",
+    "tenacity>=9.1.2",
+]
 
 [build-system]
 requires = ["hatchling"]
