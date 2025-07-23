@@ -3,3 +3,6 @@ fix:
 check:
     uv run ruff format . --check
     uv run mypy .
+
+run *args:
+    uv run python -m src.api.run {{args}}
